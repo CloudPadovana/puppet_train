@@ -1,0 +1,89 @@
+# 
+# To be used when another member of the same project can't change something
+# created by another user of the same project
+"admin_or_user":  "is_admin:True or (role:admin and is_admin_project:True) or user_id:%(user_id)s"
+
+# Update snapshot.
+# PUT  /snapshots/{snapshot_id}
+"volume:update_snapshot": "rule:admin_or_user"
+
+# Delete snapshot.
+# DELETE  /snapshots/{snapshot_id}
+"volume:delete_snapshot": "rule:admin_or_user"
+
+# Extend a volume.
+# POST  /volumes/{volume_id}/action (os-extend)
+"volume:extend": "rule:admin_or_user"
+
+# Extend a attached volume.
+# POST  /volumes/{volume_id}/action (os-extend)
+"volume:extend_attached_volume": "rule:admin_or_user"
+
+# Revert a volume to a snapshot.
+# POST  /volumes/{volume_id}/action (revert)
+"volume:revert_to_snapshot": "rule:admin_or_user"
+
+# Retype a volume.
+# POST  /volumes/{volume_id}/action (os-retype)
+"volume:retype": "rule:admin_or_user"
+
+# Update a volume's readonly flag.
+# POST  /volumes/{volume_id}/action (os-update_readonly_flag)
+"volume:update_readonly_flag": "rule:admin_or_user"
+
+# Mark volume as reserved.
+# POST  /volumes/{volume_id}/action (os-reserve)
+"volume_extension:volume_actions:reserve": "rule:admin_or_user"
+
+# Unmark volume as reserved.
+# POST  /volumes/{volume_id}/action (os-unreserve)
+"volume_extension:volume_actions:unreserve": "rule:admin_or_user"
+
+# Update volume.
+# PUT  /volumes
+"volume:update": "rule:admin_or_user"
+
+# Delete volume.
+# DELETE  /volumes/{volume_id}
+"volume:delete": "rule:admin_or_user" 
+
+# Update snapshot's metadata or one specified metadata with a given
+# key.
+# PUT  /snapshots/{snapshot_id}/metadata
+# PUT  /snapshots/{snapshot_id}/metadata/{key}
+"volume:update_snapshot_metadata": "rule:admin_or_user"
+
+# Delete snapshot's specified metadata with a given key.
+# DELETE  /snapshots/{snapshot_id}/metadata/{key}
+"volume:delete_snapshot_metadata": "rule:admin_or_user" 
+
+# Update volume's metadata or one specified metadata with a given key.
+# PUT  /volumes/{volume_id}/metadata
+# PUT  /volumes/{volume_id}/metadata/{key}
+"volume:update_volume_metadata": "rule:admin_or_user"
+
+# Delete volume's specified metadata with a given key.
+# DELETE  /volumes/{volume_id}/metadata/{key}
+"volume:delete_volume_metadata": "rule:admin_or_user" 
+
+# Create attachment.
+# POST  /attachments
+"volume:attachment_create": "rule:admin_or_user"
+
+# Update attachment.
+# PUT  /attachments/{attachment_id}
+"volume:attachment_update": "rule:admin_or_user"
+
+# Delete attachment.
+# DELETE  /attachments/{attachment_id}
+"volume:attachment_delete": "rule:admin_or_user"
+
+# Mark a volume attachment process as completed (in-use)
+# POST  /attachments/{attachment_id}/action (os-complete)
+"volume:attachment_complete": "rule:admin_or_user"
+
+# Policies for detach
+"volume_extension:volume_admin_actions:force_detach": "rule:admin_or_user"
+"volume_extension:volume_actions:detach": "rule:admin_or_user"
+"volume_extension:volume_actions:begin_detaching": "rule:admin_or_user"
+"volume_extension:volume_actions:roll_detaching": "rule:admin_or_user"

@@ -1,0 +1,85 @@
+Listen 5000
+Listen 5001
+
+
+
+<VirtualHost _default_:5001>
+    ServerName       https://<%=@cv_site_fqdn-%>:5000
+    UseCanonicalName On
+    TraceEnable      Off
+    LimitRequestBody 114688
+
+    ErrorLog        "/var/log/httpd/keystone_wsgi_internal_error_unipd.log"
+    TransferLog     "/var/log/httpd/keystone_wsgi_internal_transfer_unipd.log"
+    CustomLog       "/var/log/httpd/keystone_wsgi_internal_access_unipd.log" combined
+    LogLevel        warn
+    ServerSignature Off
+    ErrorLogFormat  "%{cu}t %M"
+
+    WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
+    WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-unipd-internal processes=5 threads=1 user=keystone group=keystone display-name=keystone-unipd-internal
+    WSGIProcessGroup      keystone-unipd-internal
+
+    <Directory /usr/bin>
+        Require all granted
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+</VirtualHost>
+
+
+
+
+
+<VirtualHost _default_:5000>
+    ServerName       https://<%=@site_fqdn -%>:5000
+    UseCanonicalName On
+    TraceEnable      Off
+    LimitRequestBody 114688
+
+    ErrorLog        "/var/log/httpd/keystone_wsgi_internal_error_infn.log"
+    TransferLog     "/var/log/httpd/keystone_wsgi_internal_transfer_infn.log"
+    CustomLog       "/var/log/httpd/keystone_wsgi_internal_access_infn.log" combined
+    LogLevel        warn
+    ServerSignature Off
+    ErrorLogFormat  "%{cu}t %M"
+
+    WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
+    WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-infn-internal processes=5 threads=1 user=keystone group=keystone display-name=keystone-infn-internal
+    WSGIProcessGroup      keystone-infn-internal
+
+    <Directory /usr/bin>
+        Require all granted
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+</VirtualHost>
+
+
+
+
+Alias /identity /usr/bin/keystone-wsgi-public
+<Location /identity>
+    SetHandler wsgi-script
+    Options +ExecCGI
+
+    WSGIProcessGroup keystone-public
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIPassAuthorization On
+</Location>
+
+Alias /identity_admin /usr/bin/keystone-wsgi-admin
+<Location /identity_admin>
+    SetHandler wsgi-script
+    Options +ExecCGI
+
+    WSGIProcessGroup keystone-admin
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIPassAuthorization On
+</Location>
