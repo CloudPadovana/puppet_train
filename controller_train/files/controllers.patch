@@ -1,0 +1,60 @@
+--- controllers.py	2018-11-21 17:40:57.000000000 +0100
++++ controllers.py.new	2019-03-20 15:22:38.429195112 +0100
+@@ -330,34 +330,44 @@
+         ref = PROVIDERS.federation_api.get_idp_from_remote_id(remote_id)
+         # NOTE(stevemar): the returned object is a simple dict that
+         # contains the idp_id and remote_id.
++        # Keystone-patch-0001
+         identity_provider = ref['idp_id']
+-        res = self.federated_authentication(request,
+-                                            identity_provider,
+-                                            protocol_id)
+-        token_id = res.headers['X-Subject-Token']
+-        return self.render_html_response(host, token_id)
++        try:
++            res = self.federated_authentication(request,
++                                                identity_provider,
++                                                protocol_id)
++            token_id = res.headers['X-Subject-Token']
++            return self.render_html_response(host, token_id)
++        except exception.Unauthorized:
++            LOG.error("Caught unauthorized during SSO")
++            return self.render_html_response(host, "", '401')
+ 
+     def federated_idp_specific_sso_auth(self, request, idp_id, protocol_id):
+         host = self._get_sso_origin_host(request)
+ 
+         # NOTE(lbragstad): We validate that the Identity Provider actually
+         # exists in the Mapped authentication plugin.
+-        res = self.federated_authentication(request,
+-                                            idp_id,
+-                                            protocol_id)
+-        token_id = res.headers['X-Subject-Token']
+-        return self.render_html_response(host, token_id)
++        # Keystone-patch-0001
++        try:
++            res = self.federated_authentication(request,
++                                                idp_id,
++                                                protocol_id)
++            token_id = res.headers['X-Subject-Token']
++            return self.render_html_response(host, token_id)
++        except exception.Unauthorized:
++            LOG.error("Caught unauthorized during SSO")
++            return self.render_html_response(host, "", '401')
+ 
+-    def render_html_response(self, host, token_id):
++    def render_html_response(self, host, token_id, ret_code='200'):
+         """Form an HTML Form from a template with autosubmit."""
+         headers = [('Content-Type', 'text/html')]
+ 
+         with open(CONF.federation.sso_callback_template) as template:
+             src = string.Template(template.read())
+ 
+-        subs = {'host': host, 'token': token_id}
++        subs = {'host': host, 'token': token_id, 'code': ret_code}
+         body = src.substitute(subs)
+-        return webob.Response(body=body, status='200', charset='utf-8',
++        return webob.Response(body=body, status=ret_code, charset='utf-8',
+                               headerlist=headers)
+ 
+     def _create_base_saml_assertion(self, context, auth):

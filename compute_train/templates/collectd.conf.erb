@@ -1,0 +1,36 @@
+Hostname    "<%= @fqdn %>"
+FQDNLookup   true
+BaseDir     "/var/lib/collectd"
+PIDFile     "/var/run/collectd.pid"
+PluginDir   "/usr/lib64/collectd"
+TypesDB     "/usr/share/collectd/types.db"
+Interval    600
+
+
+LoadPlugin network
+LoadPlugin virt
+LoadPlugin syslog
+
+<Plugin syslog>
+       LogLevel info
+</Plugin>
+
+
+<Plugin network>
+Server "<%=@influxdb_collectd_host-%>" "<%=@influxdb_collectd_port-%>"
+</Plugin>
+
+
+<Plugin virt>
+        Connection "qemu:///system"
+        HostnameFormat hostname
+        PluginInstanceFormat uuid
+        Instances 1
+        ExtraStats "cpu_util"
+        # Don't collect metrics regarding block devices and network interfaces
+        BlockDevice "/:/"
+	InterfaceDevice "/:/"
+        IgnoreSelected true
+</Plugin>
+
+#Include "/etc/collectd.d"

@@ -1,0 +1,26 @@
+Hostname    "<%= @fqdn %>"
+FQDNLookup   true
+BaseDir     "/var/lib/collectd"
+PIDFile     "/var/run/collectd.pid"
+PluginDir   "/usr/lib64/collectd"
+TypesDB     "/usr/share/collectd/types.db"
+
+
+LoadPlugin network
+LoadPlugin virt
+
+<Plugin network>
+Server "<%=@influxdb_collectd_host-%>" "<%=@influxdb_collectd_port-%>"
+</Plugin>
+
+
+<Plugin virt>
+        Connection "qemu:///system"
+        RefreshInterval 300
+        HostnameFormat uuid
+        PluginInstanceFormat uuid
+        Instances 1
+        ExtraStats "cpu_util job_stats_background pcpu perf vcpupin"
+</Plugin>
+
+Include "/etc/collectd.d"

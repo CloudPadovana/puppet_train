@@ -1,0 +1,256 @@
+[global]
+fsid = 8162f291-00b6-4b40-a8b4-1981a8c09b64
+
+public network = 192.168.61.0/24
+cluster network = 192.168.222.0/24
+
+
+auth_cluster_required = cephx
+auth_service_required = cephx
+auth_client_required = cephx
+
+osd pool default size = 3  # Write an object 3 times.
+osd pool default min size = 2
+
+rbd default format = 2
+rbd default features = 3
+
+# num OSD = 30
+# replica)num = 3
+# (num OSD * 100) / replica_num
+osd pool default pg num = 128
+osd pool default pgp num = 128
+
+#mon initial members = ceph-mon-01
+#mon host = 192.168.61.206
+
+# Default quota for object storage 
+rgw user default quota max size = 200G
+
+
+[mon]
+mon host =  ceph-mon-01, ceph-mon-02, ceph-mon-03
+mon addr =  192.168.61.206:6789, 192.168.61.207:6789, 192.168.61.208:6789
+
+[mon.ceph-mon-01]
+mon addr = 192.168.61.206:6789
+host = ceph-mon-01
+
+[mon.ceph-mon-02]
+mon addr = 192.168.61.207:6789
+host = ceph-mon-02
+
+[mon.ceph-mon-03]
+mon addr = 192.168.61.208:6789
+host = ceph-mon-03
+
+[osd]
+osd mount options xfs = rw,noatime,inode64,logbufs=8,logbsize=256k
+osd journal size = 30720
+
+[osd.0]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.1]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.2]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.3]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.4]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.5]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.6]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.7]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.8]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.9]
+host = ceph-osd-01 #manual deployments only.
+public addr = 192.168.61.202
+cluster addr = 192.168.222.202
+
+[osd.10]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.11]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.12]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.13]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.14]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.15]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.16]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.17]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.18]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.19]
+host = ceph-osd-02 #manual deployments only.
+public addr = 192.168.61.203
+cluster addr = 192.168.222.203
+
+[osd.20]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.21]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.22]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.23]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.24]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.25]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.26]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.27]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.28]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+[osd.29]
+host = ceph-osd-03 #manual deployments only.
+public addr = 192.168.61.204
+cluster addr = 192.168.222.204
+
+#[client]
+[client.rgw.ceph-test-rgw-01]                                                                                                                    
+#
+# SSL 
+#rgw_frontends="civetweb port=7480s ssl_certificate=/etc/cert.pem"                                                                                    
+#
+# Plain
+rgw_frontends="civetweb port=7480"
+#
+# Realm, zonegroup and zone
+rgw_zone=cloudtest
+rgw_zonegroup=cloudtest
+rgw_realm=cloudtest
+debug rgw = 2
+#
+# OpenStack cloud
+rgw keystone url = https://keystone-cv-test.pd.infn.it/v3
+rgw keystone accepted roles = project_manager, _member_, user, admin, Member
+rgw keystone api version = 3
+rgw keystone admin token = 5cc92673eeaf42bd69d0
+rgw keystone token cache size = 0
+##rgw keystone revocation interval = 100 
+
+rgw keystone implicit tenants = false
+rgw s3 auth use keystone = true
+nss_db_path = /var/ceph/nss
+#
+
+
+[client.rgw.ceph-rgw-01]   
+#
+# SSL 
+#rgw_frontends="civetweb port=7480s ssl_certificate=/etc/cert.pem"    
+#
+# Plain
+rgw_frontends="civetweb port=7480"
+#
+# Realm, zonegroup and zone
+rgw_zone=cloudprod
+rgw_zonegroup=cloudprod
+rgw_realm=cloudprod
+
+# Debug level
+debug rgw = 2
+#
+# OpenStack cloud
+rgw keystone url = https://keystone-cv.pd.infn.it/v3
+rgw keystone accepted roles = project_manager, _member_, user, admin, Member
+rgw keystone api version = 3
+rgw keystone admin token = 7ca67072d76528ced503
+rgw keystone token cache size = 0
+##rgw keystone revocation interval = 100                       
+
+rgw keystone implicit tenants = false
+rgw s3 auth use keystone = true
+nss_db_path = /var/ceph/nss
