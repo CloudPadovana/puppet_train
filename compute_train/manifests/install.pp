@@ -1,7 +1,7 @@
-class compute_ussuri::install inherits compute_ussuri::params {
-#include compute_ussuri::params
+class compute_train::install inherits compute_train::params {
+#include compute_train::params
 
-$cloud_role = $compute_ussuri::cloud_role          
+$cloud_role = $compute_train::cloud_role          
 
 ### Repository settings (remove old rpm and install new one)
   
@@ -54,7 +54,7 @@ $cloud_role = $compute_ussuri::cloud_role
          onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
   } ->
 
-  compute_ussuri::install::removepackage{
+  compute_train::install::removepackage{
      $oldrelease :
   } ->
 
@@ -148,7 +148,7 @@ $cloud_role = $compute_ussuri::cloud_role
                match  => 'Defaults:neutron !requiretty',
             }
  
-if $::compute_ussuri::cloud_role == "is_prod_localstorage" or $::compute_ussuri::cloud_role ==  "is_prod_sharedstorage" {                             
+if $::compute_train::cloud_role == "is_prod_localstorage" or $::compute_train::cloud_role ==  "is_prod_sharedstorage" {                             
    package { 'glusterfs-fuse':
               ensure => 'installed',
            }

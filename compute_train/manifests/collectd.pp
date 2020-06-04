@@ -1,4 +1,4 @@
-class compute_ussuri::collectd inherits compute_ussuri::params {
+class compute_train::collectd inherits compute_train::params {
 
     $collectdpackages= [ 'collectd', 'collectd-virt' ]
   
@@ -12,7 +12,7 @@ class compute_ussuri::collectd inherits compute_ussuri::params {
          owner    => "root",
          group    => "root",
          mode     => '0644',
-         content  => template("compute_ussuri/collectd.conf.erb"),
+         content  => template("compute_train/collectd.conf.erb"),
          require => Package[$collectdpackages],
        }
 

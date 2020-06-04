@@ -1,6 +1,6 @@
-class compute_ussuri::pwl_access {
+class compute_train::pwl_access {
 
-include compute_ussuri::params
+include compute_train::params
 
   $home_dir = "/var/lib/nova"
   $config = "Host *
@@ -38,7 +38,7 @@ include compute_ussuri::params
             group   => nova;
 
 	"private_key":
-	    source  => "puppet:///modules/compute_ussuri/$compute_ussuri::params::private_key",
+	    source  => "puppet:///modules/compute_train/$compute_train::params::private_key",
 	    path    => "$home_dir/.ssh/id_rsa",
             owner   => nova,
             group   => nova,
@@ -46,13 +46,13 @@ include compute_ussuri::params
 
 	"public_key":
             path    => "$home_dir/.ssh/id_rsa.pub",
-            content => "$compute_ussuri::params::pub_key",
+            content => "$compute_train::params::pub_key",
             owner   => nova,
             group   => nova;
 
         "authorized_keys":
             path    => "$home_dir/.ssh/authorized_keys",
-            content => "$compute_ussuri::params::pub_key",
+            content => "$compute_train::params::pub_key",
             ensure  => present,
             owner   => nova,
             group   => nova;

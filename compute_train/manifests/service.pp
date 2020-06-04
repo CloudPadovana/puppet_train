@@ -1,5 +1,5 @@
-class compute_ussuri::service inherits compute_ussuri::params {
-#include compute_ussuri::params
+class compute_train::service inherits compute_train::params {
+#include compute_train::params
 
 # Services needed
 
@@ -11,7 +11,7 @@ class compute_ussuri::service inherits compute_ussuri::params {
                         hasstatus   => true,
                         hasrestart  => true,
                         require     => Package["openstack-neutron-openvswitch"],
-                     #  subscribe   => Class['compute_ussuri::neutron'],
+                     #  subscribe   => Class['compute_train::neutron'],
                }
               ####invece di configure metto nova o neutron
        service { "neutron-openvswitch-agent":
@@ -20,7 +20,7 @@ class compute_ussuri::service inherits compute_ussuri::params {
                         hasstatus   => true,
                         hasrestart  => true,
                         require     => Package["openstack-neutron-openvswitch"],
-                        subscribe   => Class['compute_ussuri::neutron'],
+                        subscribe   => Class['compute_train::neutron'],
                }
        
        service { "neutron-ovs-cleanup":
@@ -43,7 +43,7 @@ class compute_ussuri::service inherits compute_ussuri::params {
                     hasstatus   => true,
                     hasrestart  => true,
                     require     => Package["openstack-nova-compute"],
-                    subscribe   => Class['compute_ussuri::nova']
+                    subscribe   => Class['compute_train::nova']
                }
 
        service { "polkit":
@@ -51,7 +51,7 @@ class compute_ussuri::service inherits compute_ussuri::params {
                     enable      => true,
                     hasstatus   => true,
                     hasrestart  => true,
-                    subscribe   => Class['compute_ussuri::nova']
+                    subscribe   => Class['compute_train::nova']
 
                }
         
@@ -62,7 +62,7 @@ class compute_ussuri::service inherits compute_ussuri::params {
         #            hasstatus   => true,
         #            hasrestart  => true,
         #            require     => Package["openstack-ceilometer-compute"],
-        #            subscribe   => Class['compute_ussuri::ceilometer'],
+        #            subscribe   => Class['compute_train::ceilometer'],
         #        }
         ###################################
 
@@ -73,7 +73,7 @@ class compute_ussuri::service inherits compute_ussuri::params {
              }
                             
 
-    if $::compute_ussuri::cloud_role == "is_prod_localstorage" {
+    if $::compute_train::cloud_role == "is_prod_localstorage" {
 
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
@@ -82,7 +82,7 @@ class compute_ussuri::service inherits compute_ussuri::params {
                        }
                              }
 
-    if $::compute_ussuri::cloud_role == "is_prod_sharedstorage" {
+    if $::compute_train::cloud_role == "is_prod_sharedstorage" {
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
                             ensure      => directory,

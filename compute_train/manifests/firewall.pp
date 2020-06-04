@@ -1,6 +1,6 @@
-class compute_ussuri::firewall inherits compute_ussuri::params {
+class compute_train::firewall inherits compute_train::params {
 
-#include compute_ussuri::params
+#include compute_train::params
 
   service { "NetworkManager":
              ensure      => stopped,

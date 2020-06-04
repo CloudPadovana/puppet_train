@@ -1,6 +1,6 @@
-class compute_ussuri::bacula {
+class compute_train::bacula {
 
-include compute_ussuri::params
+include compute_train::params
 
    $baculapackages = [ "bacula-client" ]
   

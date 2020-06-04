@@ -1,4 +1,4 @@
-class compute_ussuri::stopservices inherits compute_ussuri::params {
+class compute_train::stopservices inherits compute_train::params {
 
 # Services needed
 #systemctl stop openvswitch

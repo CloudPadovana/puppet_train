@@ -1,6 +1,6 @@
-class compute_ussuri::libvirt {
+class compute_train::libvirt {
 
-include compute_ussuri::params
+include compute_train::params
 
    $libvirtpackages = [ "libvirt" ]
   

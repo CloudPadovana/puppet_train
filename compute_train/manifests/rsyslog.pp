@@ -1,6 +1,6 @@
-class compute_ussuri::rsyslog inherits compute_ussuri::params {
+class compute_train::rsyslog inherits compute_train::params {
 
-#include compute_ussuri::params
+#include compute_train::params
 
   $rsyslogpackages = [ "rsyslog" ]
   
@@ -32,7 +32,7 @@ class compute_ussuri::rsyslog inherits compute_ussuri::params {
 
       
     file {'ignore_nagios':
-      source      => 'puppet:///modules/compute_ussuri/ignore-systemd-session-slice-nagios.conf',
+      source      => 'puppet:///modules/compute_train/ignore-systemd-session-slice-nagios.conf',
       path        => '/etc/rsyslog.d/ignore-systemd-session-slice-nagios.conf',
       backup      => true,
       owner   => root,

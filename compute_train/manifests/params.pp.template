@@ -1,5 +1,5 @@
-#class compute_ussuri::params {
-class compute_ussuri::params ($cloud_role) {
+#class compute_train::params {
+class compute_train::params ($cloud_role) {
 ########creando la classe cloud_prod con parametro cloud_role posso introdurre la condizione production, test o qualunque altro tipo di cloud semplicemente sovrascrivendo via foreman il valore della variabile. Qui andrebbe ovviamente inserito un if per ogni tipo di cloud utilizzata con i parametri caratteristici della cloud
 
 ####

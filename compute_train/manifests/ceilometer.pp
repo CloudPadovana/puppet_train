@@ -1,7 +1,7 @@
-class compute_ussuri::ceilometer inherits compute_ussuri::params {
+class compute_train::ceilometer inherits compute_train::params {
 
-#include compute_ussuri::params
-include compute_ussuri::install
+#include compute_train::params
+include compute_train::install
 
 #  $ceilometerpackages = [ "openstack-ceilometer-compute",
 #                          "python-wsme" ]
@@ -40,38 +40,38 @@ include compute_ussuri::install
 #
 # ceilometer.conf
 #
-  do_config { 'transport_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'transport_url', value => $compute_ussuri::params::transport_url, }
-  do_config { 'ceilometer_auth_strategy': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'auth_strategy', value => $compute_ussuri::params::auth_strategy, }
-  do_config { 'ceilometer_auth_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $compute_ussuri::params::auth_uri, }
-  do_config { 'ceilometer_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_url', value => $compute_ussuri::params::auth_url, }
-  do_config { 'ceilometer_project_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_name', value => $compute_ussuri::params::project_name, }               
-  do_config { 'ceilometer_username': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'username', value => $compute_ussuri::params::ceilometer_username, }
-  do_config { 'ceilometer_password': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'password', value => $compute_ussuri::params::ceilometer_password, }
-  do_config { 'ceilometer_memcached_servers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $compute_ussuri::params::memcached_servers, }
-  do_config { 'ceilometer_auth_type': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_type', value => $compute_ussuri::params::auth_type, }
-  do_config { 'ceilometer_project_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $compute_ussuri::params::project_domain_name, }
-  do_config { 'ceilometer_user_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $compute_ussuri::params::user_domain_name, }
-  #do_config { 'ceilometer_keystone_authtoken_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'cafile', value => $compute_ussuri::params::cafile, }
+  do_config { 'transport_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'transport_url', value => $compute_train::params::transport_url, }
+  do_config { 'ceilometer_auth_strategy': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'auth_strategy', value => $compute_train::params::auth_strategy, }
+  do_config { 'ceilometer_auth_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $compute_train::params::auth_uri, }
+  do_config { 'ceilometer_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_url', value => $compute_train::params::auth_url, }
+  do_config { 'ceilometer_project_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_name', value => $compute_train::params::project_name, }               
+  do_config { 'ceilometer_username': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'username', value => $compute_train::params::ceilometer_username, }
+  do_config { 'ceilometer_password': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'password', value => $compute_train::params::ceilometer_password, }
+  do_config { 'ceilometer_memcached_servers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $compute_train::params::memcached_servers, }
+  do_config { 'ceilometer_auth_type': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_type', value => $compute_train::params::auth_type, }
+  do_config { 'ceilometer_project_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $compute_train::params::project_domain_name, }
+  do_config { 'ceilometer_user_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $compute_train::params::user_domain_name, }
+  #do_config { 'ceilometer_keystone_authtoken_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'cafile', value => $compute_train::params::cafile, }
 
-  do_config { 'ceilometer_service_credentials_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'auth_url', value => $compute_ussuri::params::ceilometer_auth_url, }
-  do_config { 'ceilometer_service_credentials_username': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'username', value => $compute_ussuri::params::ceilometer_username, }
-  do_config { 'ceilometer_service_credentials_password': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'password', value => $compute_ussuri::params::ceilometer_password, }
-  do_config { 'ceilometer_service_credentials_project_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'project_name', value => $compute_ussuri::params::project_name, }
-  do_config { 'ceilometer_service_credentials_region_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'region_name', value => $compute_ussuri::params::region_name, }
-  do_config { 'ceilometer_service_credentials_interface': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'interface', value => $compute_ussuri::params::ceilometer_interface, }
-  do_config { 'ceilometer_service_credentials_auth_type': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'auth_type', value => $compute_ussuri::params::auth_type, }
+  do_config { 'ceilometer_service_credentials_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'auth_url', value => $compute_train::params::ceilometer_auth_url, }
+  do_config { 'ceilometer_service_credentials_username': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'username', value => $compute_train::params::ceilometer_username, }
+  do_config { 'ceilometer_service_credentials_password': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'password', value => $compute_train::params::ceilometer_password, }
+  do_config { 'ceilometer_service_credentials_project_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'project_name', value => $compute_train::params::project_name, }
+  do_config { 'ceilometer_service_credentials_region_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'region_name', value => $compute_train::params::region_name, }
+  do_config { 'ceilometer_service_credentials_interface': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'interface', value => $compute_train::params::ceilometer_interface, }
+  do_config { 'ceilometer_service_credentials_auth_type': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'auth_type', value => $compute_train::params::auth_type, }
 
 ####sulla doc ocata queste variabili sono project_domain_id e user_domain_id
-  do_config { 'ceilometer_service_credentials_project_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'project_domain_name', value => $compute_ussuri::params::project_domain_name, }
-  do_config { 'ceilometer_service_credentials_user_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'user_domain_name', value => $compute_ussuri::params::user_domain_name, }
-do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'cafile', value => $compute_ussuri::params::cafile, }
+  do_config { 'ceilometer_service_credentials_project_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'project_domain_name', value => $compute_train::params::project_domain_name, }
+  do_config { 'ceilometer_service_credentials_user_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'user_domain_name', value => $compute_train::params::user_domain_name, }
+do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'cafile', value => $compute_train::params::cafile, }
 
 #############
 ###check se in nova conf in default ci sono usage audit period notify ib state change e notification driver ...vedi anche in configure.pp
 ###########check  fatto e ci sono in configure.pp
   
 #######Proxy headers parsing
-do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_ussuri::params::enable_proxy_headers_parsing, }
+do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_train::params::enable_proxy_headers_parsing, }
 
 
 ### workload_partitioning
@@ -79,7 +79,7 @@ do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilom
     conf_file => '/etc/ceilometer/ceilometer.conf',
     section => 'compute',
     param => 'workload_partitioning',
-    value => $compute_ussuri::params::ceilometer_compute_workload_partitioning,
+    value => $compute_train::params::ceilometer_compute_workload_partitioning,
   }
 
 
@@ -88,7 +88,7 @@ do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilom
     conf_file => '/etc/ceilometer/ceilometer.conf',
     section => 'compute',
     param => 'instance_discovery_method',
-    value => $compute_ussuri::params::ceilometer_compute_instance_discovery_method,
+    value => $compute_train::params::ceilometer_compute_instance_discovery_method,
   }
 
                       

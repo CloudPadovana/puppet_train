@@ -1,8 +1,8 @@
-class compute_ussuri::systemsetting {
+class compute_train::systemsetting {
 
-# inherits compute_ussuri::params {
+# inherits compute_train::params {
 
-include compute_ussuri::params
+include compute_train::params
 
   # disable SELinux
   exec { "setenforce 0":
@@ -15,7 +15,7 @@ include compute_ussuri::params
 #  Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 #  Sysctl {
 #          notify      => Exec["load-sysctl"],
-#          #require     => Class['compute_ussuri::libvirt'],
+#          #require     => Class['compute_train::libvirt'],
 #         }
 
 #   $my_sysctl_settings = {
@@ -60,7 +60,7 @@ include compute_ussuri::params
         }
 
    file {'INFN-CA.pem':
-             source      => 'puppet:///modules/compute_ussuri/INFN-CA.pem',
+             source      => 'puppet:///modules/compute_train/INFN-CA.pem',
              path        => '/etc/grid-security/certificates/INFN-CA.pem',
         }
 
