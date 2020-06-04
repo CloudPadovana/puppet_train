@@ -1,3 +1,3 @@
-# puppet_ussuri
-puppet classes for openstack ussuri cloud (controller and compute configuration)
+# puppet_train
+puppet classes for openstack train cloud (controller and compute configuration)
 
