@@ -1,4 +1,4 @@
-class controller_ussuri::rsyslog inherits controller_ussuri::params {
+class controller_train::rsyslog inherits controller_train::params {
 
 #
 # Questa classe configura rsyslog in modo da centralizzare i log su cld-foreman
@@ -17,7 +17,7 @@ class controller_ussuri::rsyslog inherits controller_ussuri::params {
       }
 
       file {'rsyslog_conf':
-          source      => 'puppet:///modules/controller_ussuri/rsyslog.conf',
+          source      => 'puppet:///modules/controller_train/rsyslog.conf',
           path        => '/etc/rsyslog.conf',
           backup      => true,
           owner   => root,
@@ -27,7 +27,7 @@ class controller_ussuri::rsyslog inherits controller_ussuri::params {
          }
 
       file {'ignore_nagios':
-          source      => 'puppet:///modules/controller_ussuri/ignore-systemd-session-slice-nagios.conf',
+          source      => 'puppet:///modules/controller_train/ignore-systemd-session-slice-nagios.conf',
           path        => '/etc/rsyslog.d/ignore-systemd-session-slice-nagios.conf',
           backup      => true,
           owner   => root,

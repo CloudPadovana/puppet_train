@@ -1,4 +1,4 @@
-class controller_ussuri::pwl_access inherits controller_ussuri::params {
+class controller_train::pwl_access inherits controller_train::params {
 
 #
 # Questa classe configura ssh per l'account nova in modo da permettere accesso password-less
@@ -34,7 +34,7 @@ class controller_ussuri::pwl_access inherits controller_ussuri::params {
             group   => nova;
 
 	"private_key":
-	    source  => "puppet:///modules/controller_ussuri/$controller_ussuri::params::private_key",
+	    source  => "puppet:///modules/controller_train/$controller_train::params::private_key",
 	    path    => "$home_dir/.ssh/id_rsa",
             owner   => nova,
             group   => nova,
@@ -42,13 +42,13 @@ class controller_ussuri::pwl_access inherits controller_ussuri::params {
 
 	"public_key":
             path    => "$home_dir/.ssh/id_rsa.pub",
-            content => "$controller_ussuri::params::pub_key",
+            content => "$controller_train::params::pub_key",
             owner   => nova,
             group   => nova;
 
         "authorized_keys":
             path    => "$home_dir/.ssh/authorized_keys",
-            content => "$controller_ussuri::params::pub_key",
+            content => "$controller_train::params::pub_key",
             ensure  => present,
             owner   => nova,
             group   => nova;

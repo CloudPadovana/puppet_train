@@ -1,4 +1,4 @@
-class controller_ussuri::configure_openidc inherits controller_ussuri::params {
+class controller_train::configure_openidc inherits controller_train::params {
 
   package { "mod_auth_openidc":
     ensure  => present,
@@ -9,7 +9,7 @@ class controller_ussuri::configure_openidc inherits controller_ussuri::params {
     owner    => "apache",
     group    => "apache",
     mode     => "0640",
-    content  => template("controller_ussuri/openidc.conf.erb"),
+    content  => template("controller_train/openidc.conf.erb"),
     tag      => ["oidc_conf"],
   }
 

@@ -1,4 +1,4 @@
-class controller_ussuri::service inherits controller_ussuri::params {
+class controller_train::service inherits controller_train::params {
   
  ## Services
 
@@ -7,7 +7,7 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_horizon'],
+                   subscribe   => Class['controller_train::configure_horizon'],
            }
 
  service { "fetch-crl-cron":
@@ -24,7 +24,7 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => [ Class['controller_ussuri::configure_keystone'], Class['controller_ussuri::configure_horizon'], ],
+                   subscribe   => [ Class['controller_train::configure_keystone'], Class['controller_train::configure_horizon'], ],
            }
 
  # Services for Glance
@@ -33,14 +33,14 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_glance'],
+                   subscribe   => Class['controller_train::configure_glance'],
            }
     service { "openstack-glance-registry":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_glance'],
+                   subscribe   => Class['controller_train::configure_glance'],
             }
 
  # Services for nova       
@@ -49,35 +49,35 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_nova'],
+                   subscribe   => Class['controller_train::configure_nova'],
            }
     service { "openstack-nova-consoleauth":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_nova'],
+                   subscribe   => Class['controller_train::configure_nova'],
            }
     service { "openstack-nova-scheduler":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_nova'],
+                   subscribe   => Class['controller_train::configure_nova'],
            }
     service { "openstack-nova-novncproxy":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_nova'],
+                   subscribe   => Class['controller_train::configure_nova'],
            }
     service { "openstack-nova-conductor":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_nova'],
+                   subscribe   => Class['controller_train::configure_nova'],
            }
     ## FF Da pike openstack-nova-cert non c'e' piu'
     #service { "openstack-nova-cert":
@@ -85,7 +85,7 @@ class controller_ussuri::service inherits controller_ussuri::params {
     #               enable      => true,
     #               hasstatus   => true,
     #               hasrestart  => true,
-    #               subscribe   => Class['controller_ussuri::configure_nova'],
+    #               subscribe   => Class['controller_train::configure_nova'],
     #       }
     ###
             
@@ -95,14 +95,14 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_ec2'],
+                   subscribe   => Class['controller_train::configure_ec2'],
            }
     service { "openstack-ec2-api-metadata":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_ec2'],
+                   subscribe   => Class['controller_train::configure_ec2'],
            }
 
  # Services for neutron       
@@ -111,42 +111,42 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_neutron'],
+                   subscribe   => Class['controller_train::configure_neutron'],
            }
     service { "neutron-server":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_neutron'],
+                   subscribe   => Class['controller_train::configure_neutron'],
            }
     service { "neutron-openvswitch-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_neutron'],
+                   subscribe   => Class['controller_train::configure_neutron'],
            }
     service { "neutron-dhcp-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_neutron'],
+                   subscribe   => Class['controller_train::configure_neutron'],
            }
     service { "neutron-metadata-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_neutron'],
+                   subscribe   => Class['controller_train::configure_neutron'],
            }
     service { "neutron-l3-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_neutron'],
+                   subscribe   => Class['controller_train::configure_neutron'],
            }
 
  # Services for cinder
@@ -155,28 +155,28 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_cinder'],
+                   subscribe   => Class['controller_train::configure_cinder'],
            }
     service { "openstack-cinder-scheduler":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_cinder'],
+                   subscribe   => Class['controller_train::configure_cinder'],
            }
     service { "openstack-cinder-volume":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_cinder'],
+                   subscribe   => Class['controller_train::configure_cinder'],
            }
     service { "target":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_cinder'],
+                   subscribe   => Class['controller_train::configure_cinder'],
            }
            
  # Services for heat
@@ -185,21 +185,21 @@ class controller_ussuri::service inherits controller_ussuri::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_heat'],
+                   subscribe   => Class['controller_train::configure_heat'],
            }
     service { "openstack-heat-api-cfn":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_heat'],
+                   subscribe   => Class['controller_train::configure_heat'],
            }
     service { "openstack-heat-engine":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ussuri::configure_heat'],
+                   subscribe   => Class['controller_train::configure_heat'],
            }
            
  # Services for ceilometer
@@ -208,28 +208,28 @@ class controller_ussuri::service inherits controller_ussuri::params {
     #               enable      => true,
     #               hasstatus   => true,
     #               hasrestart  => true,
-    #               subscribe   => Class['controller_ussuri::configure_ceilometer'],
+    #               subscribe   => Class['controller_train::configure_ceilometer'],
     #       }
     #service { "openstack-ceilometer-notification":
     #               ensure      => running,
     #               enable      => true,
     #               hasstatus   => true,
     #               hasrestart  => true,
-    #               subscribe   => Class['controller_ussuri::configure_ceilometer'],
+    #               subscribe   => Class['controller_train::configure_ceilometer'],
     #        }          
     #service { "openstack-ceilometer-central":
     #               ensure      => running,
     #               enable      => true,
     #               hasstatus   => true,
     #               hasrestart  => true,
-    #               subscribe   => Class['controller_ussuri::configure_ceilometer'],
+    #               subscribe   => Class['controller_train::configure_ceilometer'],
     #       }
     #service { "openstack-ceilometer-collector":
     #               ensure      => running,
     #               enable      => true,
     #               hasstatus   => true,
     #               hasrestart  => true,
-    #               subscribe   => Class['controller_ussuri::configure_ceilometer'],
+    #               subscribe   => Class['controller_train::configure_ceilometer'],
     #       }
 
   }

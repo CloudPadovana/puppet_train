@@ -1,4 +1,4 @@
-class controller_ussuri::configure_keystone inherits controller_ussuri::params {
+class controller_train::configure_keystone inherits controller_train::params {
 
 #
 # Questa classe:
@@ -49,7 +49,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
   $namevars = array_to_namevars($values, "${conf_file}~${section}~${param}", "~")
 
   # check each value
-  controller_ussuri::configure_keystone::do_augeas_config { $namevars:
+  controller_train::configure_keystone::do_augeas_config { $namevars:
     conf_file => $conf_file,
     section => $section,
     param => $param
@@ -58,29 +58,29 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
 # keystone.conf
 ## Not needed anymore (needed only for the very first installation)
-##  controller_ussuri::configure_keystone::do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_ussuri::params::admin_token, }
+##  controller_train::configure_keystone::do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_train::params::admin_token, }
 
 
-  controller_ussuri::configure_keystone::do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_ussuri::params::keystone_public_endpoint, }
+  controller_train::configure_keystone::do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_train::params::keystone_public_endpoint, }
 
 # Deprecated
 # Reason: With the removal of the 2.0 API keystone does not distinguish between
 # admin and public endpoints.
-#controller_ussuri::configure_keystone::do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value #=> $controller_ussuri::params::keystone_admin_endpoint, }
+#controller_train::configure_keystone::do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value #=> $controller_train::params::keystone_admin_endpoint, }
 
-  controller_ussuri::configure_keystone::do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_ussuri::params::keystone_db, }
+  controller_train::configure_keystone::do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_train::params::keystone_db, }
 
-  controller_ussuri::configure_keystone::do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_ussuri::params::keystone_token_provider, }
-  controller_ussuri::configure_keystone::do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_ussuri::params::token_expiration, }
+  controller_train::configure_keystone::do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_train::params::keystone_token_provider, }
+  controller_train::configure_keystone::do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_train::params::token_expiration, }
 
 
 
        
 #######Proxy headers parsing
-  controller_ussuri::configure_keystone::do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_ussuri::params::enable_proxy_headers_parsing, }
+  controller_train::configure_keystone::do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_train::params::enable_proxy_headers_parsing, }
 
 
-##  controller_ussuri::configure_keystone::do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_ussuri::params::keystone_auth_methods, }
+##  controller_train::configure_keystone::do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_train::params::keystone_auth_methods, }
 
 
 
@@ -89,7 +89,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
      owner    => "root",
      group    => "root",
      mode     => '0644',
-     content  => template("controller_ussuri/wsgi-keystone.conf.erb"),
+     content  => template("controller_train/wsgi-keystone.conf.erb"),
    }
 
    file { '/etc/httpd/conf.d/wsgi-keystone.conf':
@@ -104,28 +104,28 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
   if $enable_aai_ext {
 
-    controller_ussuri::configure_keystone::do_config { 'keystone_auth_methods':
+    controller_train::configure_keystone::do_config { 'keystone_auth_methods':
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'auth',
       param     => 'methods',
       value     => 'password,token,mapped,openid',
     }
 
-    controller_ussuri::configure_keystone::do_config_list { "keystone_trusted_dashboards":
+    controller_train::configure_keystone::do_config_list { "keystone_trusted_dashboards":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'federation',
       param     => 'trusted_dashboard',
       values    => [ "https://${site_fqdn}/dashboard/auth/websso/", "https://${cv_site_fqdn}/dashboard/auth/websso/" ],
     }
     
-    controller_ussuri::configure_keystone::do_config { "keystone_shib_attr":
+    controller_train::configure_keystone::do_config { "keystone_shib_attr":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'mapped',
       param     => 'remote_id_attribute',
       value     => 'Shib-Identity-Provider',
     }
 
-    controller_ussuri::configure_keystone::do_config { "keystone_oidc_attr":
+    controller_train::configure_keystone::do_config { "keystone_oidc_attr":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'openid',
       param     => 'remote_id_attribute',
@@ -137,7 +137,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
       owner    => "keystone",
       group    => "keystone",
       mode     => '0640',
-      source  => "puppet:///modules/controller_ussuri/policy.json",
+      source  => "puppet:///modules/controller_train/policy.json",
     }
 
     ### Patch for error handling in OS-Federation
@@ -150,7 +150,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
       owner    => "keystone",
       group    => "keystone",
       mode     => '0640',
-      source  => "puppet:///modules/controller_ussuri/controllers.patch",
+      source  => "puppet:///modules/controller_train/controllers.patch",
     }
     
     exec { "patch-controllers":
@@ -164,7 +164,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
       owner    => "keystone",
       group    => "keystone",
       mode     => '0640',
-      source  => "puppet:///modules/controller_ussuri/sso_callback_template.patch",
+      source  => "puppet:///modules/controller_train/sso_callback_template.patch",
     }
     
     exec { "patch-sso-callback-template":

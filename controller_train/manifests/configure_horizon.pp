@@ -1,11 +1,11 @@
-class controller_ussuri::configure_horizon inherits controller_ussuri::params {
+class controller_train::configure_horizon inherits controller_train::params {
   
   file { "/etc/httpd/conf.d/ssl.conf":
     ensure   => file,
     owner    => "root",
     group    => "root",
     mode     => "0644",
-    content  => template("controller_ussuri/ssl.conf.erb"),
+    content  => template("controller_train/ssl.conf.erb"),
   }
   
   file { "/etc/httpd/conf.d/openstack-dashboard.conf":
@@ -13,7 +13,7 @@ class controller_ussuri::configure_horizon inherits controller_ussuri::params {
     owner    => "root",
     group    => "root",
     mode     => "0644",
-    content  => file("controller_ussuri/openstack-dashboard.conf"),
+    content  => file("controller_train/openstack-dashboard.conf"),
   }
  
   file { "/etc/openstack-dashboard/local_settings":
@@ -21,7 +21,7 @@ class controller_ussuri::configure_horizon inherits controller_ussuri::params {
     owner    => "root",
     group    => "apache",
     mode     => "0640",
-    content  => template("controller_ussuri/local_settings.erb"),
+    content  => template("controller_train/local_settings.erb"),
   }
 
   file { '/var/log/horizon/horizon_log':
@@ -58,7 +58,7 @@ class controller_ussuri::configure_horizon inherits controller_ussuri::params {
       owner    => "root",
       group    => "apache",
       mode     => "0640",
-      content  => template("controller_ussuri/aai_settings.py.erb"),
+      content  => template("controller_train/aai_settings.py.erb"),
     }
 
     file { "/etc/openstack-auth-shib/notifications/notifications_en.txt":
@@ -66,7 +66,7 @@ class controller_ussuri::configure_horizon inherits controller_ussuri::params {
       owner    => "root",
       group    => "root",
       mode     => "0644",
-      content  => template("controller_ussuri/notifications_en.txt.erb"),
+      content  => template("controller_train/notifications_en.txt.erb"),
       require  => Package["openstack-auth-cap"],
     }
 
@@ -91,7 +91,7 @@ class controller_ussuri::configure_horizon inherits controller_ussuri::params {
 
   ### Patch for AAI testing IdP
 
-    if $::controller_ussuri::cloud_role == "is_test" {
+    if $::controller_train::cloud_role == "is_test" {
 
       exec { "patch_infnaai_testing_idp":
         command => "/bin/sed -i 's|idp.infn.it/saml2|idp.infn.it/testing/saml2|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_cap_settings.py",
@@ -118,7 +118,7 @@ class controller_ussuri::configure_horizon inherits controller_ussuri::params {
     owner    => "root",
     group    => "root",
     mode     => "0600",
-    content  => template("controller_ussuri/actions.conf.erb"),
+    content  => template("controller_train/actions.conf.erb"),
   }
   
   if "${::fqdn}" =~ /01/ {
@@ -132,7 +132,7 @@ class controller_ussuri::configure_horizon inherits controller_ussuri::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => template("controller_ussuri/openstack-auth-shib-cron.erb"),
+    content  => template("controller_train/openstack-auth-shib-cron.erb"),
   }
 
 }

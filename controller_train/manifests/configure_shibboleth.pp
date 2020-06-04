@@ -1,4 +1,4 @@
-class controller_ussuri::configure_shibboleth inherits controller_ussuri::params {
+class controller_train::configure_shibboleth inherits controller_train::params {
 
   exec { "download_shib_repo":
     command => "/usr/bin/wget -q -O /etc/yum.repos.d/shibboleth.repo ${shib_repo_url}",
@@ -87,18 +87,18 @@ class controller_ussuri::configure_shibboleth inherits controller_ussuri::params
     owner    => "root",
     group    => "root",
     mode     => "0644",
-    source   => "puppet:///modules/controller_ussuri/attribute-map.xml",
+    source   => "puppet:///modules/controller_train/attribute-map.xml",
     tag      => ["shibboleth_conf"],
   }
 
-  controller_ussuri::configure_shibboleth::srvmetadata { "/etc/shibboleth/horizon-infn-metadata.xml":
+  controller_train::configure_shibboleth::srvmetadata { "/etc/shibboleth/horizon-infn-metadata.xml":
     entityid => "https://${site_fqdn}/dashboard-shib",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Area Padovana (Horizon)",
     sp_org   => "INFN"
   }
 
-  controller_ussuri::configure_shibboleth::srvmetadata { "/etc/shibboleth/keystone-infn-metadata.xml":
+  controller_train::configure_shibboleth::srvmetadata { "/etc/shibboleth/keystone-infn-metadata.xml":
     entityid => "https://${keystone_cap_fqdn}/v3",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Area Padovana (Keystone)",
@@ -106,7 +106,7 @@ class controller_ussuri::configure_shibboleth inherits controller_ussuri::params
   }
 
 
-  controller_ussuri::configure_shibboleth::srvmetadata { "/etc/shibboleth/horizon-unipd-metadata.xml":
+  controller_train::configure_shibboleth::srvmetadata { "/etc/shibboleth/horizon-unipd-metadata.xml":
     entityid => "https://${cv_site_fqdn}/dashboard-shib",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Veneto (Horizon)",
@@ -114,7 +114,7 @@ class controller_ussuri::configure_shibboleth inherits controller_ussuri::params
   }
 
 
-  controller_ussuri::configure_shibboleth::srvmetadata { "/etc/shibboleth/keystone-unipd-metadata.xml":
+  controller_train::configure_shibboleth::srvmetadata { "/etc/shibboleth/keystone-unipd-metadata.xml":
     entityid => "https://${keystone_cv_fqdn}/v3",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Veneto (Keystone)",
@@ -126,7 +126,7 @@ class controller_ussuri::configure_shibboleth inherits controller_ussuri::params
     owner    => "root",
     group    => "root",
     mode     => "0644",
-    content  => template("controller_ussuri/shibboleth2.xml.erb"),
+    content  => template("controller_train/shibboleth2.xml.erb"),
     tag      => ["shibboleth_conf"],
   }
 
@@ -148,7 +148,7 @@ class controller_ussuri::configure_shibboleth inherits controller_ussuri::params
       owner    => "root",
       group    => "root",
       mode     => "0644",
-      content  => template("controller_ussuri/idem-template-metadata.xml.erb"),
+      content  => template("controller_train/idem-template-metadata.xml.erb"),
       tag      => ["shibboleth_conf"],
     }
   }

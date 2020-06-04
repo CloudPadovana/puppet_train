@@ -1,7 +1,7 @@
-class controller_ussuri::params ($cloud_role){
+class controller_train::params ($cloud_role){
 
 
-  if $::controller_ussuri::cloud_role == "is_production" {
+  if $::controller_train::cloud_role == "is_production" {
 
    ##########################################
    # Cloud di produzione
@@ -103,7 +103,7 @@ class controller_ussuri::params ($cloud_role){
    $is_production = true
    } 
     
-   if $::controller_ussuri::cloud_role == "is_test"    {
+   if $::controller_train::cloud_role == "is_test"    {
 
    ##########################################
    # Cloud di test
@@ -432,7 +432,7 @@ class controller_ussuri::params ($cloud_role){
   $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
   $shib_info_url = "https://cloud-areapd.pd.infn.it/Users_Guide/html-desktop/"
   
-  if $::controller_ussuri::cloud_role == "is_production" {
+  if $::controller_train::cloud_role == "is_production" {
     $infnaai_ent_id = "https://idp.infn.it/saml2/idp/metadata.php"
     $shib_testing_md = false
   } else {
@@ -446,7 +446,7 @@ class controller_ussuri::params ($cloud_role){
   #  OpenID Connect params
   ############################################################################
 
-  if $::controller_ussuri::cloud_role == "is_production" {
+  if $::controller_train::cloud_role == "is_production" {
 
     $enable_oidc = false
 

@@ -1,4 +1,4 @@
-class controller_ussuri::install_ca_cert inherits controller_ussuri::params {
+class controller_train::install_ca_cert inherits controller_train::params {
 
   yumrepo { "EGI-trustanchors":
           baseurl=> "http://repository.egi.eu/sw/production/cas/1/current/",
@@ -22,7 +22,7 @@ class controller_ussuri::install_ca_cert inherits controller_ussuri::params {
   }
 
   file {'INFN-CA.pem':
-    source  => 'puppet:///modules/controller_ussuri/INFN-CA.pem',
+    source  => 'puppet:///modules/controller_train/INFN-CA.pem',
     path    => '/etc/grid-security/certificates/INFN-CA.pem',
   }
 
