@@ -120,7 +120,6 @@ class controller_train::params ($cloud_role){
    $ceilometer_service_credentials_auth_url = ''
    $ceilometer_password = ''
    $cinder_db = ''
-   ## FF da queens cambia la porta, /etc/cinder/cinder.conf [keystone_authtoken] auth_uri = http://controller:5000 e auth_url = http://controller:5000
    $cinder_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $cinder_password = ''  
    $cinder_public_endpoint = ''
@@ -129,7 +128,9 @@ class controller_train::params ($cloud_role){
    $cinder_ceph_rbd_secret_uuid = ''
    $cinder_ceph_rbd_user = ''
 ######
-   $dhcp-option-force = ''
+   ### FF in params.pp ha _
+   $dhcp_option_force = ''
+   ##
    $dnsmasq_config_file = '/etc/neutron/dnsmasq-neutron.conf'
 #########
    $ec2_password = ''
@@ -139,7 +140,6 @@ class controller_train::params ($cloud_role){
    $glance_db = ''
    $glance_api_servers = ''
    $glance_password = ''
-   ## FF da queens [keystone_authtoken] auth_url gira sulla porta 5000
    $glance_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
 ###ceph
    $glance_api_rbd_store_pool = ''
@@ -148,8 +148,6 @@ class controller_train::params ($cloud_role){
    $keystone_admin_endpoint =  ''
    $keystone_db =  ''
    $keystone_public_endpoint =  ''
-   ## FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
-   ## Ma secondo la documentazione bisogna specificare l'endpoint pubblico
    $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:5000'
    $heat_db = ''    
    $heat_metadata_server_url = ''
@@ -160,24 +158,19 @@ class controller_train::params ($cloud_role){
    $memcached_servers_horizon = ''
    $metadata_proxy_shared_secret = ''
    $ml2_bridge_mappings = 'external:br-ex'
-   ## FF in rocky [neutron] auth_url passa da 35357 a 5000
    $neutron_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $neutron_db = ''
    $neutron_password = ''
-   ### FF DEPRECATED in ROCKY [neutron]url diventa [neutron]endpoint_override 
-   #$neutron_url = ''
    $neutron_endpoint_override = ''
-   ##FF in rocky per neutron [keystone_authtoken] auth_url passa da 35357 a 5000
    $neutron_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000' 
-   ###
    $nova_api_db = ''
    $nova_cinder_endpoint_template = ''
    $nova_db = ''
    $nova_password = ''
-   ## FF da queens nova_keystone_authtoken e nova_placement_auth_url cambiano porte da 35357 a 5000 
    $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
    $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
    ## FF in rocky si puo' creare il DB placement, con relativa connection url. Se non viene creato si continua ad usare solo il nova_api db
+   ## FF in train si deve creare il DB placement
    #$nova_placement_db = '' }
    ###
    $nova_disk_allocation_ratio = ''
@@ -302,7 +295,6 @@ class controller_train::params ($cloud_role){
    $glance_api_show_multiple_locations = true
    $glance_enable_v1_api = 'True'
    $glance_api_enabled_backends	= 'file:file,http:http,rbd:rbd'
-#   $glance_store = 'file,http,rbd'
    $glance_store = 'http,rbd'
    $glance_store_datadir = '/var/lib/glance/images/'
    $glance_username = 'glance'
@@ -391,8 +383,12 @@ class controller_train::params ($cloud_role){
    $quota_floatingip = '0'
    $region_name = 'regionOne'
    #$scheduler_default_filters e' stato sostituito con enabled_filters
+###  FF CoreFilter, DiskFilter and RamFilter deprecated in Stein. RetryFilter deprecated in Train.
    #$enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,RamFilter,CoreFilter,AggregateRamFilter,AggregateCoreFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
-   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
+#   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
+###
+## FF Aggiungo PciPassthroughFilter che e' nei params.pp ma non nel template
+   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,PciPassthroughFilter'
    $service_metadata_proxy = true
    $token_expiration = '32400'
    $user_domain_name = 'default'
