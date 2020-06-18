@@ -355,7 +355,10 @@ class controller_train::params ($cloud_role){
    $neutron_service_plugins = 'router'
    $neutron_username = 'neutron'
    $neutron_verbose = false
-   $nova_cinder_catalog_info = 'volumev3:cinderv3:internalURL'
+   ## FF in Stein the name of the service is removed
+   #$nova_cinder_catalog_info = 'volumev3:cinderv3:internalURL'
+   $nova_cinder_catalog_info = 'volumev3:internalURL'
+   ###
    $nova_cpu_allocation_ratio = '4.0'
    $nova_default_schedule_zone = 'nova'
    ### FF deprecato in PIKE
