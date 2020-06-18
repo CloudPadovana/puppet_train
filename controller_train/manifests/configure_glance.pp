@@ -68,14 +68,19 @@ define remove_config ($conf_file, $section, $param, $value) {
 #       controller_train::configure_glance::do_config { 'glance_api_registry_host': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'registry_host', value => $controller_train::params::vip_mgmt, }
   controller_train::configure_glance::do_config { 'glance_api_show_multiple_locations': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_multiple_locations', value => $controller_train::params::glance_api_show_multiple_locations, }
   controller_train::configure_glance::do_config { 'glance_api_show_image_direct_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_image_direct_url', value => $controller_train::params::glance_api_show_image_direct_url, }
-  #
-  # parametro necessario per la nuova funzionalita' di interoperable image import
-  #
-  controller_train::configure_glance::do_config { 'glance_api_node_staging_uri': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'node_staging_uri', value => $controller_train::params::glance_api_node_staging_uri, }
+#
+# parametro necessario per la nuova funzionalita' di interoperable image import
+# deprecato in train. sostituito da filesystem_store_datadir
+#  controller_train::configure_glance::do_config { 'glance_api_node_staging_uri': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'node_staging_uri', value => $controller_train::params::glance_api_node_staging_uri, }
+
 
 # New ways in rocky to define glance backends       
 # But this causes problems when adding location: revert to old mode
 #       controller_train::configure_glance::do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_train::params::glance_api_enabled_backends, }
+# In train we try to enable glance backends again
+  controller_train::configure_glance::do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_train::params::glance_api_enabled_backends, }
+# In train we start to configure reserved stores
+  controller_train::configure_glance::do_config { 'glance_api_filesystem_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'os_glance_staging_store', param => 'filesystem_store_datadir', value => $controller_train::params::glance_api_filesystem_store_datadir, }
 
 
   controller_train::configure_glance::do_config { 'glance_api_db': conf_file => '/etc/glance/glance-api.conf', section => 'database', param => 'connection', value => $controller_train::params::glance_db, }
@@ -99,18 +104,22 @@ define remove_config ($conf_file, $section, $param, $value) {
 #
 # stores and default_store deprecated against new attributes enabled_backends and default_backend
 # But this causes problems with add location: let's revert to old mode       
-  controller_train::configure_glance::do_config { 'glance_api_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'stores', value => $controller_train::params::glance_store, }
-  controller_train::configure_glance::do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_store', value => $controller_train::params::glance_api_default_store, }
-#  controller_train::configure_glance::do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_backend', value => $controller_train::params::glance_api_default_store, }
+#  controller_train::configure_glance::do_config { 'glance_api_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'stores', value => $controller_train::params::glance_store, }
+#  controller_train::configure_glance::do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_store', value => $controller_train::params::glance_api_default_store, }
+# In train we try to enable multiple stores back
+  controller_train::configure_glance::do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_backend', value => $controller_train::params::glance_api_default_store, }
 
 # File backend       
   controller_train::configure_glance::do_config { 'glance_api_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'filesystem_store_datadir', value => $controller_train::params::glance_store_datadir, }
 
 # Ceph backend       
-  controller_train::configure_glance::do_config { 'glance_api_rbd_store_pool': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_pool', value => $controller_train::params::glance_api_rbd_store_pool, }
-  controller_train::configure_glance::do_config { 'glance_api_rbd_store_user': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_user', value => $controller_train::params::glance_api_rbd_store_user, }
-  controller_train::configure_glance::do_config { 'glance_api_rbd_store_ceph_conf': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_ceph_conf', value => $controller_train::params::ceph_rbd_ceph_conf, }
-  controller_train::configure_glance::do_config { 'glance_api_rbd_store_chunk_size': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_chunk_size', value => $controller_train::params::glance_api_rbd_store_chunk_size, }
+# api_rbd_store_* gets its own section in train [glance_store] ==> [rbd]
+# In train we also get a 'description' parameter for each enabled backend
+  controller_train::configure_glance::do_config { 'glance_api_rbd_store_description': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'store_description', value => $controller_train::params::glance_api_rbd_store_description, }
+  controller_train::configure_glance::do_config { 'glance_api_rbd_store_pool': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_pool', value => $controller_train::params::glance_api_rbd_store_pool, }
+  controller_train::configure_glance::do_config { 'glance_api_rbd_store_user': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_user', value => $controller_train::params::glance_api_rbd_store_user, }
+  controller_train::configure_glance::do_config { 'glance_api_rbd_store_ceph_conf': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_ceph_conf', value => $controller_train::params::ceph_rbd_ceph_conf, }
+  controller_train::configure_glance::do_config { 'glance_api_rbd_store_chunk_size': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_chunk_size', value => $controller_train::params::glance_api_rbd_store_chunk_size, }
        
 ###############
 # Settings needed for ceilomer
