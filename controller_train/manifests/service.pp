@@ -51,13 +51,14 @@ class controller_train::service inherits controller_train::params {
                    hasrestart  => true,
                    subscribe   => Class['controller_train::configure_nova'],
            }
-    service { "openstack-nova-consoleauth":
-                   ensure      => running,
-                   enable      => true,
-                   hasstatus   => true,
-                   hasrestart  => true,
-                   subscribe   => Class['controller_train::configure_nova'],
-           }
+## FF deprecated since 18.0.0 (Rocky)
+#    service { "openstack-nova-consoleauth":
+#                   ensure      => running,
+#                  enable      => true,
+#                   hasstatus   => true,
+#                   hasrestart  => true,
+#                   subscribe   => Class['controller_train::configure_nova'],
+#           }
     service { "openstack-nova-scheduler":
                    ensure      => running,
                    enable      => true,
