@@ -11,9 +11,8 @@ class compute_train::service inherits compute_train::params {
                         hasstatus   => true,
                         hasrestart  => true,
                         require     => Package["openstack-neutron-openvswitch"],
-                     #  subscribe   => Class['compute_train::neutron'],
                }
-              ####invece di configure metto nova o neutron
+
        service { "neutron-openvswitch-agent":
                         ensure      => running,
                         enable      => true,
@@ -55,16 +54,6 @@ class compute_train::service inherits compute_train::params {
 
                }
         
-        ## FF non usiamo piu' ceilometer ##
-        #service { "openstack-ceilometer-compute":
-        #            ensure      => stopped,
-        #            enable      => true,
-        #            hasstatus   => true,
-        #            hasrestart  => true,
-        #            require     => Package["openstack-ceilometer-compute"],
-        #            subscribe   => Class['compute_train::ceilometer'],
-        #        }
-        ###################################
 
         exec { 'create_bridge':
                      command     => "/usr/bin/ovs-vsctl add-br br-int",
