@@ -4,6 +4,7 @@ class controller_train::configure_nova inherits controller_train::params {
 # Questa classe:
 # - popola il file /etc/nova/nova.conf
 # - crea il file /etc/nova/policy.json in modo che solo l'owner di una VM possa farne lo stop e delete
+# - crea il file /etc/nova/vendor-data.json (solo cloud di produzione) 
 # 
 ###################  
 define do_config ($conf_file, $section, $param, $value) {
@@ -62,6 +63,13 @@ define do_config_list ($conf_file, $section, $param, $values) {
        
 # nova.conf
    controller_train::configure_nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $controller_train::params::auth_strategy, }
+
+   # MS for vendordata
+   if $::controller_train::cloud_role == "is_production" {
+       controller_train::configure_nova::do_config { 'nova_vendordata_providers': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_providers', value => $controller_train::params::nova_vendordata_providers, }
+       controller_train::configure_nova::do_config { 'nova_vendordata_jsonfile_path': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_jsonfile_path', value => $controller_train::params::nova_vendordata_jsonfile_path, }
+   }
+   ###
 
    controller_train::configure_nova::do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_train::params::transport_url, }
    controller_train::configure_nova::do_config { 'nova_my_ip': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_train::params::vip_mgmt, }
@@ -160,6 +168,20 @@ file {'00-nova-placement-api.conf':
            backup      => true,
            mode        => "0640",
          }
+
+# MS for vendordata
+if $::controller_train::cloud_role == "is_production" {
+  file {'vendor-data.json':
+           source      => 'puppet:///modules/controller_train/vendor-data-prod.json',
+           path        => '/etc/nova/vendor-data.json',
+           ensure      => present,
+           backup      => true,
+           owner       => root,
+           group       => nova,
+           mode        => "0640",
+         }
+}
+###
 
  
 }
