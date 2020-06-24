@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- BUILD BY PUPPET -->
-<SPConfig xmlns="urn:mace:shibboleth:2.0:native:sp:config"
-    xmlns:conf="urn:mace:shibboleth:2.0:native:sp:config"
-    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
-    xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"    
-    xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+<SPConfig xmlns="urn:mace:shibboleth:3.0:native:sp:config"
+    xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config"
     clockSkew="180">
+
+    <OutOfProcess tranLogFormat="%u|%s|%IDP|%i|%ac|%t|%attr|%n|%b|%E|%S|%SS|%L|%UA|%a" />
 
     <ApplicationDefaults id="default"
                          entityID="https://<%=@site_fqdn-%>/dashboard-shib"
-                         REMOTE_USER="eppn persistent-id targeted-id">
+                         REMOTE_USER="eppn persistent-id targeted-id"
+                         cipherSuites="DEFAULT:!EXP:!LOW:!aNULL:!eNULL:!DES:!IDEA:!SEED:!RC4:!3DES:!kRSA:!SSLv2:!SSLv3:!TLSv1:!TLSv1.1">
 
         <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                  checkAddress="false" handlerSSL="true" cookieProps="https">
+                  checkAddress="false" handlerSSL="true" cookieProps="https"
+                  redirectLimit="none">
 
-            <SSO>SAML2 SAML1</SSO>
+            <SSO>SAML2</SSO>
 
             <Logout>SAML2 Local</Logout>
 
@@ -23,33 +24,33 @@
                      template="/etc/shibboleth/horizon-infn-metadata.xml"
                      signing="true"/>
 
+            <Handler type="Session" Location="/Session" showAttributeValues="false"/>
+
         </Sessions>
 
         <Errors redirectErrors="https://<%=@site_fqdn-%>/dashboard/auth/auth_error/"/>
-       
-        <MetadataProvider type="Chaining">
+
 <% if @shib_testing_md -%>
-            <MetadataProvider type="XML"
-                              uri="https://idp.infn.it/testing/saml2/idp/metadata.php"
-                              backingFilePath="/var/cache/shibboleth/idp.infn.it-testing-metadata.xml"/>
-            <MetadataProvider type="XML"
-                              uri="https://shibidpdev.cca.unipd.it/idp/shibboleth"
-                              backingFilePath="/var/cache/shibboleth/idp.unipd.it-testing-metadata.xml"/>
+        <MetadataProvider type="XML"
+                          url="https://idp.infn.it/testing/saml2/idp/metadata.php"
+                          backingFilePath="/var/cache/shibboleth/idp.infn.it-testing-metadata.xml"/>
+        <MetadataProvider type="XML"
+                          url="https://shibidpdev.cca.unipd.it/idp/shibboleth"
+                          backingFilePath="/var/cache/shibboleth/idp.unipd.it-testing-metadata.xml"/>
 <% else -%>
-            <MetadataProvider type="XML"
-                              uri="https://idp.infn.it/saml2/idp/metadata.php"
-                              backingFilePath="/var/cache/shibboleth/idp.infn.it-metadata.xml"/>
-            <MetadataProvider type="XML"
-                              uri="https://shibidp.cca.unipd.it/idp/shibboleth"
-                              backingFilePath="/var/cache/shibboleth/idp.unipd.it-metadata.xml"/>
+        <MetadataProvider type="XML"
+                          url="https://idp.infn.it/saml2/idp/metadata.php"
+                          backingFilePath="/var/cache/shibboleth/idp.infn.it-metadata.xml"/>
+        <MetadataProvider type="XML"
+                          url="https://shibidp.cca.unipd.it/idp/shibboleth"
+                          backingFilePath="/var/cache/shibboleth/idp.unipd.it-metadata.xml"/>
 <% end -%>
-        </MetadataProvider>
-        
+
         <AttributeExtractor type="XML" 
                             validate="true"
                             reloadChanges="false"
                             path="attribute-map.xml"/>
-        <AttributeResolver type="Query" subjectMatch="true"/>
+        <!-- AttributeResolver type="Query" subjectMatch="true"/ -->
         <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
 
         <CredentialResolver type="File">
@@ -60,13 +61,13 @@
             </Certificate>
         </CredentialResolver>
 
-
         <ApplicationOverride id="infn_ssoapp" entityID="https://<%=@keystone_cap_fqdn-%>/v3">
 
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                      checkAddress="false" handlerSSL="true" cookieProps="https">
+                      checkAddress="false" handlerSSL="true" cookieProps="https"
+                      redirectLimit="none">
 
-                <SSO>SAML2 SAML1</SSO>
+                <SSO>SAML2</SSO>
 
                 <Logout>SAML2 Local</Logout>
 
@@ -92,9 +93,10 @@
         <ApplicationOverride id="unipd_app" entityID="https://<%=@cv_site_fqdn-%>/dashboard-shib">
 
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                      checkAddress="false" handlerSSL="true" cookieProps="https">
+                      checkAddress="false" handlerSSL="true" cookieProps="https"
+                      redirectLimit="none">
 
-                <SSO>SAML2 SAML1</SSO>
+                <SSO>SAML2</SSO>
 
                 <Logout>SAML2 Local</Logout>
 
@@ -120,9 +122,10 @@
         <ApplicationOverride id="unipd_ssoapp" entityID="https://<%=@keystone_cv_fqdn-%>/v3">
 
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                      checkAddress="false" handlerSSL="true" cookieProps="https">
+                      checkAddress="false" handlerSSL="true" cookieProps="https"
+                      redirectLimit="none">
 
-                <SSO>SAML2 SAML1</SSO>
+                <SSO>SAML2</SSO>
 
                 <Logout>SAML2 Local</Logout>
 
@@ -143,10 +146,6 @@
             </CredentialResolver>
 
         </ApplicationOverride>
-
-
-
-
 
     </ApplicationDefaults>
     
