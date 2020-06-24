@@ -24,7 +24,7 @@ class compute_train::stopservices inherits compute_train::params {
             }
     
     exec { 'checkForRelease':
-       command => "/usr/bin/yum list installed | grep centos-release-openstack-ocata ; /usr/bin/echo $?",
+       command => "/usr/bin/yum list installed | grep centos-release-openstack-rocky ; /usr/bin/echo $?",
        returns => "0",
        refreshonly => true,
     }
