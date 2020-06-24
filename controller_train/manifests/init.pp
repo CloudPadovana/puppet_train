@@ -36,9 +36,6 @@ class controller_train ($cloud_role_foreman = "undefined") {
   # Configure heat
   class {'controller_train::configure_heat':}
 
-#  # Configure ceilometer
-#  class {'controller_train::configure_ceilometer':}
-
   # Configure horizon
   class {'controller_train::configure_horizon':}
 
@@ -72,14 +69,5 @@ class controller_train ($cloud_role_foreman = "undefined") {
        Class['controller_train::configure_neutron'] -> Class['controller_train::configure_cinder']
        Class['controller_train::configure_cinder'] -> Class['controller_train::configure_horizon']
        Class['controller_train::configure_horizon'] -> Class['controller_train::configure_heat']
-       #Class['controller_train::configure_heat'] -> Class['controller_train::configure_ceilometer']
-       #if ($enable_aai_ext and $enable_shib)  {
-       #   Class['controller_train::configure_ceilometer'] -> Class['controller_train::configure_shibboleth']
-       #}
-       #if ($enable_aai_ext and $enable_oidc) {
-       #   Class['controller_train::configure_ceilometer'] -> Class['controller_train::configure_openidc']
-       #}
-       #Class['controller_train::configure_ceilometer'] -> Class['controller_train::service']
-            
 
   }
