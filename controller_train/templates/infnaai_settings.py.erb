@@ -8,7 +8,12 @@ HORIZON_CONFIG['identity_providers']['infn_sso'] = {
 
 WEBSSO_IDP_MAPPING["infn_sso"] = ("infnaai", "mapped")
 
+<% if @is_production -%>
 WEBSSO_IDP_ENTITIES["infnaai"] = [ "https://idp.infn.it/saml2/idp/metadata.php" ]
+<% else -%>
+WEBSSO_IDP_ENTITIES["infnaai"] = [ "https://idp.infn.it/testing/saml2/idp/metadata.php" ]
+<% end -%>
+
 WEBSSO_IDP_RULES["infn_sso"] = [
     {
         "local": [
