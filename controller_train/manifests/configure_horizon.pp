@@ -61,6 +61,30 @@ class controller_train::configure_horizon inherits controller_train::params {
       content  => template("controller_train/aai_settings.py.erb"),
     }
 
+    file { "/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1003_infnaai_settings.py":
+      ensure   => file,
+      owner    => "root",
+      group    => "apache",
+      mode     => "0640",
+      content  => template("controller_train/infnaai_settings.py.erb"),
+    }
+
+    file { "/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1003_unipdsso_settings.py":
+      ensure   => file,
+      owner    => "root",
+      group    => "apache",
+      mode     => "0640",
+      content  => template("controller_train/unipdsso_settings.py.erb"),
+    }
+
+    file { "/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1003_oidc_settings.py":
+      ensure   => file,
+      owner    => "root",
+      group    => "apache",
+      mode     => "0640",
+      content  => template("controller_train/oidc_settings.py.erb"),
+    }
+
     file { "/etc/openstack-auth-shib/notifications/notifications_en.txt":
       ensure   => file,
       owner    => "root",

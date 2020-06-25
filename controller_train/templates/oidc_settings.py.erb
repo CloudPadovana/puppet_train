@@ -1,0 +1,32 @@
+<% if @enable_oidc -%>
+OIDC_REDIRECT_PATH = '/dashboard-oidc/redirect'
+
+<% @oidc_providers.each do | prov_id, prov_data | -%>
+HORIZON_CONFIG['identity_providers']['<%=prov_data["map_tag"]-%>'] = {
+    'context' :     '/dashboard-<%=prov_id-%>',
+    'path' :        '/dashboard-<%=prov_id-%>/auth/register/',
+    'description' : '<%=prov_data["descr"]-%>',
+<% if prov_data.fetch("local_user", false) -%>
+    'local_user' : True,
+<% else -%>
+    'local_user' : False,
+<% end -%>
+    'logo' :        '/dashboard/static/dashboard/img/logoINDIGO.png',
+    'uid_tag' :     'OIDC-preferred_username',
+    'org_tag' :     'OIDC-organisation_name'
+}
+
+WEBSSO_IDP_MAPPING["<%=prov_data["map_tag"]-%>"] = ("<%=prov_id-%>", "openid")
+WEBSSO_IDP_ENTITIES["<%=prov_id-%>"] = [ "<%=prov_data["iss"]-%>" ]
+WEBSSO_IDP_RULES["<%=prov_data["map_tag"]-%>"] = [
+    {
+        "local": <%=prov_data["map_local"]-%>,
+        "remote": <%=prov_data["map_remote"]-%>
+    }
+]
+
+WEBSSO_CHOICES = WEBSSO_CHOICES + (('<%=prov_data["map_tag"]-%>', '<%=prov_data["descr"]-%>'), )
+
+<% end -%><%# end of @oidc_providers.each %>
+<% end -%><%# end of @enable_oidc %>
+

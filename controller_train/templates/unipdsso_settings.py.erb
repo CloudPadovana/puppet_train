@@ -1,0 +1,35 @@
+
+HORIZON_CONFIG['identity_providers']['unipd_sso'] = { 
+    'context' :     '/dashboard-unipd',
+    'path' :        'https://<%=@cv_site_fqdn-%>/dashboard-unipd/auth/register/',
+    'description' : 'UniPD SSO',
+    'logo' :        '/dashboard/static/dashboard/img/logoUniPD.png'
+}
+
+WEBSSO_IDP_MAPPING["unipd_sso"] = ("unipdaai", "mapped")
+
+WEBSSO_IDP_ENTITIES["unipdaai"] = [ "https://shibidp.cca.unipd.it/idp/shibboleth" ]
+WEBSSO_IDP_RULES["unipd_sso"] = [
+    {
+        "local": [
+            {
+                "user": {
+                    "name": "{0}",
+                    "domain": { "id": "default" },
+                    "type": "local"
+                }
+                
+            }
+        ],
+        "remote": [ { "type": "eppn" } ]
+    }
+]
+
+WEBSSO_CHOICES = WEBSSO_CHOICES + (('unipd_sso', 'UniPD IdP'),)
+
+HORIZON_CONFIG['srv_bind_table']["<%=@cv_site_fqdn-%>"] = "<%=@keystone_cv_fqdn-%>"
+
+HORIZON_CONFIG['course_for']['unipd.it'] = 'unipd_sso'
+HORIZON_CONFIG['course_for']['studenti.unipd.it'] = 'unipd_sso'
+
+

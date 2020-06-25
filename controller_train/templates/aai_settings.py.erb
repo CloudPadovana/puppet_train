@@ -1,12 +1,13 @@
-DATABASES = {
-    'default': {
-        'ENGINE' : 'django.db.backends.mysql',
-        'NAME' : '<%=@aai_db_name-%>',
-        'USER' : '<%=@aai_db_user-%>',
-        'PASSWORD' : '<%=@aai_db_pwd-%>',
-        'HOST' : '<%=@aai_db_host-%>',
-        'PORT' : '<%=@aai_db_port-%>'
-    }
+#
+# The AAI-Integration database is the default one
+#
+DATABASES['default'] = {
+    'ENGINE' : 'django.db.backends.mysql',
+    'NAME' : '<%=@aai_db_name-%>',
+    'USER' : '<%=@aai_db_user-%>',
+    'PASSWORD' : '<%=@aai_db_pwd-%>',
+    'HOST' : '<%=@aai_db_host-%>',
+    'PORT' : '<%=@aai_db_port-%>'
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -25,48 +26,6 @@ MANAGERS = (
  <%=aii_mail_admin-%>,
 <% end -%>
 )
-
-HORIZON_CONFIG['help_url'] = 'http://userguide.cloudveneto.it/'
-
-HORIZON_CONFIG['identity_providers']['infn_sso']['path'] = 'https://<%=@site_fqdn-%>/dashboard-infn/auth/register/'
-HORIZON_CONFIG['identity_providers']['unipd_sso']['path'] = 'https://<%=@cv_site_fqdn-%>/dashboard-unipd/auth/register/'
-
-HORIZON_CONFIG['srv_bind_table'] = {
-  "<%=@site_fqdn-%>" : "<%=@keystone_cap_fqdn-%>",
-  "<%=@cv_site_fqdn-%>" : "<%=@keystone_cv_fqdn-%>"
-}
-
-<% if @enable_oidc -%>
-OIDC_REDIRECT_PATH = '/dashboard-oidc/redirect'
-
-<% @oidc_providers.each do | prov_id, prov_data | -%>
-HORIZON_CONFIG['identity_providers']['<%=prov_data["map_tag"]-%>'] = {
-    'context' :     '/dashboard-<%=prov_id-%>',
-    'path' :        '/dashboard-<%=prov_id-%>/auth/register/',
-    'description' : '<%=prov_data["descr"]-%>',
-<% if prov_data.fetch("local_user", false) -%>
-    'local_user' : True,
-<% else -%>
-    'local_user' : False,
-<% end -%>
-    'logo' :        '/dashboard/static/dashboard/img/logoINDIGO.png',
-    'uid_tag' :     'OIDC-preferred_username',
-    'org_tag' :     'OIDC-organisation_name'
-}
-
-WEBSSO_IDP_MAPPING["<%=prov_data["map_tag"]-%>"] = ("<%=prov_id-%>", "openid")
-WEBSSO_IDP_ENTITIES["<%=prov_id-%>"] = [ "<%=prov_data["iss"]-%>" ]
-WEBSSO_IDP_RULES["<%=prov_data["map_tag"]-%>"] = [
-    {
-        "local": <%=prov_data["map_local"]-%>,
-        "remote": <%=prov_data["map_remote"]-%>
-    }
-]
-
-WEBSSO_CHOICES = WEBSSO_CHOICES + (('<%=prov_data["map_tag"]-%>', '<%=prov_data["descr"]-%>'), )
-
-<% end -%><%# end of @oidc_providers.each %>
-<% end -%><%# end of @enable_oidc %>
 
 <% if @is_production -%>
 
@@ -175,11 +134,6 @@ UNIT_TABLE = {
   }
 }
 
-HORIZON_CONFIG['course_for'] = {
-    'unipd.it' : 'unipd_sso',
-    'studenti.unipd.it' : 'unipd_sso'
-}
-
 <% else -%>
 
 UNIT_TABLE = {
@@ -224,11 +178,6 @@ UNIT_TABLE = {
     "lan_router" : "eaa80135-6b79-44e0-b637-cef88d09b85c",
     "nameservers" : [ "192.84.143.16", "192.84.143.224", "192.84.143.31" ]
   }
-}
-
-HORIZON_CONFIG['course_for'] = {
-    'unipd.it' : 'unipd_sso',
-    'studenti.unipd.it' : 'unipd_sso'
 }
 
 <% end -%>
