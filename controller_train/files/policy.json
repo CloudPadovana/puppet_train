@@ -31,6 +31,9 @@
 
     "identity:validate_token_head": "rule:service_or_admin",
 
-    "identity:list_project_tags": "rule:admin_required or rule:prjman_role"
+    "identity:list_project_tags": "rule:admin_required or rule:prjman_role",
+
+    "identity:list_users": "rule:admin_required or role:accounting"
+
 }
 
