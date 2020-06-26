@@ -5,30 +5,30 @@
 
     "prjman2_role": [["role:project_manager", "project_id:%(scope.project.id)s"]],
 
-    "identity:change_password": "(role:admin and system_scope:all) or (role:admin and token.domain.id:%(target.user.domain_id)s) or user_id:%(target.user.id)s",
+    "identity:change_password": "rule:admin_or_owner",
 
-    "identity:check_grant": "(role:reader and system_scope:all) or rule:prjman_role",
+    "identity:check_grant": "rule:admin_required or rule:prjman_role",
 
-    "identity:create_grant": "(role:admin and system_scope:all) or rule:prjman_role",
+    "identity:create_grant": "rule:admin_required or rule:prjman_role",
 
-    "identity:get_project": "(role:reader and system_scope:all) or (role:reader and domain_id:%(target.project.domain_id)s) or project_id:%(target.project.id)s or role:project_manager",
+    "identity:get_project": "rule:admin_required or project_id:%(target.project.id)s or role:project_manager",
 
-    "identity:get_user": "(role:reader and system_scope:all) or (role:reader and token.domain.id:%(target.user.domain_id)s) or user_id:%(target.user.id)s or role:project_manager",
+    "identity:get_user": "rule:admin_or_owner or role:project_manager",
 
-    "identity:list_grants": "(role:reader and system_scope:all) or rule:prjman_role",
+    "identity:list_grants": "rule:admin_required or rule:prjman_role",
 
-    "identity:list_projects": "(role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain_id)s or role:project_manager",
+    "identity:list_projects": "rule:admin_required or role:project_manager",
 
-    "identity:list_role_assignments": "(role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain.id)s) or rule:prjman2_role",
+    "identity:list_role_assignments": "rule:admin_required or rule:prjman2_role",
 
-    "identity:list_roles": "(role:reader and system_scope:all) or role:project_manager",
+    "identity:list_roles": "rule:admin_required or role:project_manager",
 
-    "identity:list_users": "(role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain_id)s) or role:accounting",
+    "identity:list_users": "rule:admin_required or role:accounting",
 
-    "identity:revoke_grant": "(role:admin and system_scope:all) or rule:prjman_role",
+    "identity:revoke_grant": "rule:admin_required or rule:prjman_role",
 
-    "identity:validate_token_head": "(role:reader and system_scope:all) or rule:service_role",
+    "identity:validate_token_head": "rule:service_or_admin",
 
-    "identity:list_project_tags": "(role:reader and system_scope:all) or (role:reader and domain_id:%(target.project.domain_id)s) or rule:prjman_role"
+    "identity:list_project_tags": "rule:admin_required or rule:prjman_role"
 }
 
