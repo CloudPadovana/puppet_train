@@ -141,7 +141,7 @@ controller_train::configure_neutron::do_config { 'neutron_enable_proxy_headers_p
    #controller_train::configure_neutron::do_config { 'l3_gateway_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'gateway_external_network_id', value => $controller_train::params::l3_gateway_external_network_id, }
    ## MS external_network_bridge reported as deprecated in the log file. Ma la documentazione dice di settarlo ...
    ##controller_train::configure_neutron::do_config { 'l3_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_train::params::l3_external_network_id, }
-   ## GS in train external_network_network_bridge e' deprecato e va rimosso
+   ## GS in train external_network_bridge e' deprecato e va rimosso
    #controller_train::configure_neutron::do_config { 'l3_external_network_bridge': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_train::params::l3_external_network_bridge, }
    ###
 
