@@ -426,7 +426,7 @@ class controller_train::params ($cloud_role){
   ############################################################################
   
   $enable_aai_ext = false
-  $cap_repo_url = "http://artifacts.pd.infn.it/packages/CAP/openstack-security-integrations_centos7_ocata.repo"
+  $cap_repo_url = "http://artifacts.pd.infn.it/packages/CAP/openstack-security-integrations_centos7_train.repo"
   $notification_plan = "5,10,20"
 
   ############################################################################
