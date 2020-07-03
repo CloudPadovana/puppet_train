@@ -35,13 +35,14 @@ class controller_train::service inherits controller_train::params {
                    hasrestart  => true,
                    subscribe   => Class['controller_train::configure_glance'],
            }
-    service { "openstack-glance-registry":
-                   ensure      => running,
-                   enable      => true,
-                   hasstatus   => true,
-                   hasrestart  => true,
-                   subscribe   => Class['controller_train::configure_glance'],
-            }
+## PEM glance-registry disabled since stein
+#    service { "openstack-glance-registry":
+#                   ensure      => running,
+#                   enable      => true,
+#                   hasstatus   => true,
+#                   hasrestart  => true,
+#                   subscribe   => Class['controller_train::configure_glance'],
+#            }
 
  # Services for nova       
     service { "openstack-nova-api":

@@ -130,28 +130,29 @@ define remove_config ($conf_file, $section, $param, $value) {
   controller_train::configure_glance::do_config { 'glance_enable_proxy_headers_parsing': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_train::params::enable_proxy_headers_parsing, }
 
      
-  # glance-registry.conf
-
-  controller_train::configure_glance::do_config { 'glance_reg_db': conf_file => '/etc/glance/glance-registry.conf', section => 'database', param => 'connection', value => $controller_train::params::glance_db, }
-
-#  controller_train::configure_glance::do_config { 'glance_reg_image_verbose': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'verbose', value => false, }
-  controller_train::configure_glance::do_config { 'glance_reg_image_size_cap': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_train::params::glance_image_size_cap, }
-  # FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
-  controller_train::configure_glance::do_config { 'glance_reg_www_authenticate_uri': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_train::params::www_authenticate_uri, }
-  # FF in queens e rocky [keystone_authtoken] auth_url gira sulla porta 5000
-  controller_train::configure_glance::do_config { 'glance_reg_auth_url': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_train::params::glance_keystone_authtoken_auth_url, }
-  controller_train::configure_glance::do_config { 'glance_reg_project_domain_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $controller_train::params::project_domain_name, }
-  controller_train::configure_glance::do_config { 'glance_reg_user_domain_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $controller_train::params::user_domain_name, }
-  controller_train::configure_glance::do_config { 'glance_reg_project_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'project_name', value => $controller_train::params::project_name, }
-  controller_train::configure_glance::do_config { 'glance_reg_username': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'username', value => $controller_train::params::glance_username, }
-  controller_train::configure_glance::do_config { 'glance_reg_password': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'password', value => $controller_train::params::glance_password, }
-  controller_train::configure_glance::do_config { 'glance_reg_cafile': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_train::params::cafile, }
-  controller_train::configure_glance::do_config { 'glance_reg_memcached_servers': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_train::params::memcached_servers, }
-  controller_train::configure_glance::do_config { 'glance_reg_auth_type': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_type', value => $controller_train::params::auth_type, }
-
-  controller_train::configure_glance::do_config { 'glance_reg_flavor': conf_file => '/etc/glance/glance-registry.conf', section => 'paste_deploy', param => 'flavor', value => $controller_train::params::flavor, }
- 
-# Settings needed for ceilomer     
-#  controller_train::configure_glance::do_config { 'glance_reg_notification_driver': conf_file => '/etc/glance/glance-registry.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_train::params::glance_notification_driver, }
-  controller_train::configure_glance::do_config { 'glance_reg_transport_url': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_train::params::transport_url, }
+## PEM da train glance-registry non c'e' piu'
+#  glance-registry.conf
+#
+#  controller_train::configure_glance::do_config { 'glance_reg_db': conf_file => '/etc/glance/glance-registry.conf', section => 'database', param => 'connection', value => $controller_train::params::glance_db, }
+#
+##  controller_train::configure_glance::do_config { 'glance_reg_image_verbose': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'verbose', value => false, }
+#  controller_train::configure_glance::do_config { 'glance_reg_image_size_cap': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_train::params::glance_image_size_cap, }
+#  # FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
+#  controller_train::configure_glance::do_config { 'glance_reg_www_authenticate_uri': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_train::params::www_authenticate_uri, }
+#  # FF in queens e rocky [keystone_authtoken] auth_url gira sulla porta 5000
+#  controller_train::configure_glance::do_config { 'glance_reg_auth_url': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_train::params::glance_keystone_authtoken_auth_url, }
+#  controller_train::configure_glance::do_config { 'glance_reg_project_domain_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $controller_train::params::project_domain_name, }
+#  controller_train::configure_glance::do_config { 'glance_reg_user_domain_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $controller_train::params::user_domain_name, }
+#  controller_train::configure_glance::do_config { 'glance_reg_project_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'project_name', value => $controller_train::params::project_name, }
+#  controller_train::configure_glance::do_config { 'glance_reg_username': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'username', value => $controller_train::params::glance_username, }
+#  controller_train::configure_glance::do_config { 'glance_reg_password': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'password', value => $controller_train::params::glance_password, }
+#  controller_train::configure_glance::do_config { 'glance_reg_cafile': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_train::params::cafile, }
+#  controller_train::configure_glance::do_config { 'glance_reg_memcached_servers': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_train::params::memcached_servers, }
+#  controller_train::configure_glance::do_config { 'glance_reg_auth_type': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_type', value => $controller_train::params::auth_type, }
+#
+#  controller_train::configure_glance::do_config { 'glance_reg_flavor': conf_file => '/etc/glance/glance-registry.conf', section => 'paste_deploy', param => 'flavor', value => $controller_train::params::flavor, }
+# 
+## Settings needed for ceilomer     
+##  controller_train::configure_glance::do_config { 'glance_reg_notification_driver': conf_file => '/etc/glance/glance-registry.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_train::params::glance_notification_driver, }
+#  controller_train::configure_glance::do_config { 'glance_reg_transport_url': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_train::params::transport_url, }
 }
