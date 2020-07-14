@@ -24,8 +24,8 @@ class controller_train ($cloud_role_foreman = "undefined") {
   # Configure nova
   class {'controller_train::configure_nova':}
 
-## FF for train
-  # Configure nova
+## FF for placement in train
+  # Configure placement
   class {'controller_train::configure_placement':}
 ###
 
