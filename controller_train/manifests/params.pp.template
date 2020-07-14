@@ -76,6 +76,10 @@ class controller_train::params ($cloud_role){
    ###
    $nova_disk_allocation_ratio = ''
    $nova_ram_allocation_ratio = ''
+   ## FF per train
+   placement_db = '' 
+   $placement_auth_url = ''
+   ##
    $private_key = ''
    $project_name = 'services'
    $pub_key = "ssh-rsa "   
@@ -175,6 +179,10 @@ class controller_train::params ($cloud_role){
    ###
    $nova_disk_allocation_ratio = ''
    $nova_ram_allocation_ratio = ''
+   ## FF per train
+   $placement_db = ''
+   $placement_auth_url = ''
+   ##
    $private_key = ''
    $project_name = 'service'
    $pub_key = "ssh-rsa "     

@@ -17,14 +17,14 @@ class controller_train::service inherits controller_train::params {
                    hasrestart  => true,
            }
 
-         
- # Services for keystone       
+ ## FF added placement in Train ##       
+ # Services for keystone, placement       
     service { "httpd":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => [ Class['controller_train::configure_keystone'], Class['controller_train::configure_horizon'], ],
+                   subscribe   => [ Class['controller_train::configure_keystone'], Class['controller_train::configure_horizon'], Class['controller_train::configure_placement'], ],
            }
 
  # Services for Glance
@@ -82,7 +82,8 @@ class controller_train::service inherits controller_train::params {
                    subscribe   => Class['controller_train::configure_nova'],
            }
  
-# Services for ec2       
+
+ # Services for ec2       
     service { "openstack-ec2-api":
                    ensure      => running,
                    enable      => true,

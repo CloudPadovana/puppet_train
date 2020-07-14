@@ -24,6 +24,11 @@ class controller_train ($cloud_role_foreman = "undefined") {
   # Configure nova
   class {'controller_train::configure_nova':}
 
+## FF for train
+  # Configure nova
+  class {'controller_train::configure_placement':}
+###
+
   # Configure ec2
   class {'controller_train::configure_ec2':}
 
@@ -65,7 +70,8 @@ class controller_train ($cloud_role_foreman = "undefined") {
        Class['controller_train::install_ca_cert'] -> Class['controller_train::configure_keystone']
        Class['controller_train::configure_keystone'] -> Class['controller_train::configure_glance']
        Class['controller_train::configure_glance'] -> Class['controller_train::configure_nova']
-       Class['controller_train::configure_nova'] -> Class['controller_train::configure_neutron']
+       Class['controller_train::configure_nova'] -> Class['controller_train::configure_placement']
+       Class['controller_train::configure_placement'] -> Class['controller_train::configure_neutron']
        Class['controller_train::configure_neutron'] -> Class['controller_train::configure_cinder']
        Class['controller_train::configure_cinder'] -> Class['controller_train::configure_horizon']
        Class['controller_train::configure_horizon'] -> Class['controller_train::configure_heat']
