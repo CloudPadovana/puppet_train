@@ -3,7 +3,7 @@ class controller_train::configure_placement inherits controller_train::params {
 #
 # Questa classe:
 # - popola il file /etc/placement/placement.conf
-# - crea il file /etc/placement/policy.json in modo che solo l'owner di una VM possa farne lo stop e delete
+# - crea il file /etc/placement/policy.json
 # 
 ###################  
 define do_config ($conf_file, $section, $param, $value) {
@@ -44,7 +44,7 @@ file {'placement_policy.json':
            path        => '/etc/placement/policy.json',
            backup      => true,
            owner   => root,
-           group   => nova,
+           group   => placement,
            mode    => "0640",
 
          }
