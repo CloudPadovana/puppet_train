@@ -1,0 +1,39 @@
+{
+    "default": "rule:admin_required",
+
+    "prjman_role": [["role:project_manager", "project_id:%(project_id)s"]],
+
+    "prjman2_role": [["role:project_manager", "project_id:%(scope.project.id)s"]],
+
+    "identity:change_password": "rule:admin_or_owner",
+
+    "identity:check_grant": "rule:admin_required or rule:prjman_role",
+
+    "identity:create_grant": "rule:admin_required or rule:prjman_role",
+
+    "identity:get_identity_providers": "rule:admin_required",
+
+    "identity:get_project": "rule:admin_required or project_id:%(target.project.id)s or role:project_manager",
+
+    "identity:get_user": "rule:admin_or_owner or role:project_manager",
+
+    "identity:list_grants": "rule:admin_required or rule:prjman_role",
+
+    "identity:list_projects": "rule:admin_required or role:project_manager",
+
+    "identity:list_role_assignments": "rule:admin_required or rule:prjman2_role",
+
+    "identity:list_roles": "rule:admin_required or role:project_manager",
+
+    "identity:revoke_grant": "rule:admin_required or rule:prjman_role",
+
+    "identity:update_user": "rule:admin_or_owner",
+
+    "identity:validate_token_head": "rule:service_or_admin",
+
+    "identity:list_project_tags": "rule:admin_required or rule:prjman_role",
+
+    "identity:list_users": "rule:admin_required or role:accounting"
+
+}
+
