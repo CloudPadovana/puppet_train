@@ -115,7 +115,7 @@ $cloud_role = $compute_train::cloud_role
   #} ->
 
   exec { "yum update complete":
-         command => "/usr/bin/yum -y update",
+         command => "/usr/bin/yum -y -x leatherman update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed'",
          timeout => 3600,
   } ->
@@ -170,7 +170,7 @@ $cloud_role = $compute_train::cloud_role
   } ->
 
   exec { "mv_puppet_auth_new":
-         command => "/usr/bin/mv /etc/puppet/auth.conf.rpmnew ./etc/puppet/auth.conf",
+         command => "/usr/bin/mv /etc/puppet/auth.conf.rpmnew /etc/puppet/auth.conf",
          onlyif  => "/usr/bin/test -e /etc/puppet/auth.conf.rpmnew",
   } ->
 
