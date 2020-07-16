@@ -17,6 +17,12 @@ class compute_train::stopservices inherits compute_train::params {
                         stop        => "/usr/bin/systemctl stop neutron-openvswitch-agent",
                         require => Exec['checkForRelease'],
             }
+    ## FF servizio chiesto da nova
+    #service { 'stop libvirt service':
+    #                    stop        => "/usr/bin/systemctl stop libvirtd.service",
+    #                    require => Exec['checkForRelease'],
+    #        }
+    ##
 
     service { 'stop openstack-nova-compute service':
                         stop        => "/usr/bin/systemctl stop openstack-nova-compute",
