@@ -90,7 +90,7 @@ $cloud_role = $compute_train::cloud_role
   #       command => "/usr/bin/yum -y -x puppet -x facter update",
   #       onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'not installed'",
   #       timeout => 3600,
-  } ->
+  #} ->
 
   #exec { "yum install libvirt before the openstack-nova-compute":
   #       command => "/usr/bin/yum -y install libvirt",
