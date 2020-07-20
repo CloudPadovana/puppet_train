@@ -35,7 +35,7 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_train::configure_placement::do_config { 'placement_user_domain_name': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $controller_train::params::user_domain_name, }
    controller_train::configure_placement::do_config { 'placement_project_name': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'project_name', value => $controller_train::params::project_name, }
    controller_train::configure_placement::do_config { 'placement_username': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'username', value => $controller_train::params::placement_username, }
-   controller_train::configure_placement::do_config { 'placement_password': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'password', value => $controller_train::params::placement_password, }
+   controller_train::configure_placement::do_config { 'placement_password': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'password', value => $controller_train::params::placement_password, }
 
 
 ######placement_policy is copied from /controller_train/files dir       
