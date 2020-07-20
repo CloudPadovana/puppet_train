@@ -160,15 +160,6 @@ file {'nova_policy.json':
            mode    => "0640",
 
          }
-## FF serviva in queen e rocky per correggere un baco      
-#file {'00-nova-placement-api.conf':
-#           source      => 'puppet:///modules/controller_train/00-nova-placement-api.conf',
-#           path        => '/etc/httpd/conf.d/00-nova-placement-api.conf',
-#           ensure      => present,
-#           backup      => true,
-#           mode        => "0640",
-#         }
-##
 
 # MS for vendordata
 if $::controller_train::cloud_role == "is_production" {
