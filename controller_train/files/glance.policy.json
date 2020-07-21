@@ -14,9 +14,9 @@
     "download_image": "",
     "upload_image": "",
 
-    "delete_image_location": "role:admin",
-    "get_image_location": "role:admin",
-    "set_image_location": "role:admin",
+    "delete_image_location": "",
+    "get_image_location": "",
+    "set_image_location": "",
 
     "add_member": "",
     "delete_member": "",

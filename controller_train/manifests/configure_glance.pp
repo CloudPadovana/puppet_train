@@ -66,7 +66,9 @@ define remove_config ($conf_file, $section, $param, $value) {
 # registry_host is deprecated in Rocky
 # As far as I (Massimo) understand, it was at any rate useless in our environment
 #       controller_train::configure_glance::do_config { 'glance_api_registry_host': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'registry_host', value => $controller_train::params::vip_mgmt, }
-  controller_train::configure_glance::do_config { 'glance_api_show_multiple_locations': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_multiple_locations', value => $controller_train::params::glance_api_show_multiple_locations, }
+#
+# Not needed anymore since we have now a single backend (and this attribute is now deprecated)
+#  controller_train::configure_glance::do_config { 'glance_api_show_multiple_locations': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_multiple_locations', value => $controller_train::params::glance_api_show_multiple_locations, }
   controller_train::configure_glance::do_config { 'glance_api_show_image_direct_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_image_direct_url', value => $controller_train::params::glance_api_show_image_direct_url, }
 #
 # parametro necessario per la nuova funzionalita' di interoperable image import
