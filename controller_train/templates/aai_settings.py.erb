@@ -34,8 +34,8 @@ UNIT_TABLE = {
     "name" : 'INFN',
     "organization" : 'infn.it',
     "quota_total" :  200,
-    "quota_ceph" : 200,
-    "quota_ceph-ec" : 0,
+    "quota_ceph" : 0,
+    "quota_ceph-ec" : 200,
     "quota_iscsi-infnpd" : 0,
     "quota_equallogic-unipd" : 0,
     "quota_per_volume" : 5000,
@@ -134,6 +134,11 @@ UNIT_TABLE = {
   }
 }
 
+ACCOUNTING = {
+    'user_id' : '5bff3b73dd20464f8ce3836f82ef29c0',
+    'role_id' : 'fa30a6d129384225ad2b25e28af2c149'
+}
+
 <% else -%>
 
 UNIT_TABLE = {
@@ -141,8 +146,8 @@ UNIT_TABLE = {
     "name" : 'INFN',
     "organization" : 'infn.it',
     "quota_total" :  200,
-    "quota_ceph" : 200,
-    "quota_ceph-ec" : 0,
+    "quota_ceph" : 0,
+    "quota_ceph-ec" : 200,
     "quota_iscsi-infnpd" : 0,
     "quota_equallogic-unipd" : 0,
     "quota_per_volume" : 5000,
@@ -178,6 +183,11 @@ UNIT_TABLE = {
     "lan_router" : "eaa80135-6b79-44e0-b637-cef88d09b85c",
     "nameservers" : [ "192.84.143.16", "192.84.143.224", "192.84.143.31" ]
   }
+}
+
+ACCOUNTING = {
+    'user_id' : 'a30ec455405b4c4c8e5f2c7aeb93f539',
+    'role_id' : '89bacdea12d54f7081789ea2aad3a8b1'
 }
 
 <% end -%>
