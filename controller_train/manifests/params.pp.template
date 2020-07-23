@@ -242,7 +242,7 @@ class controller_train::params ($cloud_role){
    $ceph_volume_driver = 'cinder.volume.drivers.rbd.RBDDriver'
    $ceph_volume_group = 'ceph'
    $cinder_ceph_rbd_exclusive_cinder_pool = true
-   $cinder_default_volume_type = 'ceph'
+   $cinder_default_volume_type = 'ceph-ec'
    $cinder_enabled_backends = 'ceph,iscsi-infnpd'
    $cinder_glusterfs_shares_config = '/etc/cinder/shares'
    $cinder_iscsi_helper = 'tgtadm'
