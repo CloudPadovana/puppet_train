@@ -283,27 +283,6 @@ define remove_config ($conf_file, $section, $param, $value) {
     value     => $controller_train::params::heat_insecure,
   }   
 
-  controller_train::configure_heat::do_config { 'heat_clients_ceilometer_endpoint_type':
-    conf_file => '/etc/heat/heat.conf',
-    section   => 'clients_ceilometer',
-    param     => 'endpoint_type',
-    value     => $controller_train::params::heat_endpoint_type,
-  }
-  
-  controller_train::configure_heat::do_config { 'heat_clients_ceilometer_ca_file':
-    conf_file => '/etc/heat/heat.conf',
-    section   => 'clients_ceilometer',
-    param     => 'ca_file',
-    value     => $controller_train::params::cafile,
-  }
-  
-  controller_train::configure_heat::do_config { 'heat_clients_ceilometer_insecure':
-    conf_file => '/etc/heat/heat.conf',
-    section   => 'clients_ceilometer',
-    param     => 'insecure',
-    value     => $controller_train::params::heat_insecure,
-  }
-  
   controller_train::configure_heat::do_config { 'heat_clients_glance_endpoint_type':
     conf_file => '/etc/heat/heat.conf',
     section   => 'clients_glance',
