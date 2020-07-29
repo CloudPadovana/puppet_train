@@ -5,8 +5,6 @@
 
     "prjman2_role": [["role:project_manager", "project_id:%(scope.project.id)s"]],
 
-    "identity:change_password": "rule:admin_or_owner",
-
     "identity:check_grant": "rule:admin_required or rule:prjman_role",
 
     "identity:create_grant": "rule:admin_required or rule:prjman_role",
@@ -28,6 +26,8 @@
     "identity:revoke_grant": "rule:admin_required or rule:prjman_role",
 
     "identity:validate_token_head": "rule:service_or_admin",
+
+    "identity:update_user": "rule:admin_or_owner",
 
     "identity:list_project_tags": "rule:admin_required or rule:prjman_role"
 }
