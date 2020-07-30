@@ -40,22 +40,6 @@ $cloud_role = $compute_train::cloud_role
          content => 'centos',
   } ->
 
-  #exec { "removepackage_zeromq":
-  #       command => "/usr/bin/yum -y erase zeromq",
-  #       onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
-  #} ->
-
-  
-  #exec { "removepackage_ceilometer":
-  #       command => "/usr/bin/yum -y erase *ceilometer*",
-  #       onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
-  #} ->
-
-  #exec { "removepackage_ceph-release":
-  #       command => "/usr/bin/yum -y erase ceph-release",
-  #       onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
-  #} ->
-
   compute_train::install::removepackage{
      $oldrelease :
   } ->
@@ -64,43 +48,20 @@ $cloud_role = $compute_train::cloud_role
      $oldpackage :
   } ->
 
-  #exec { "install ceph-release nautilus":
-  #       command => "/usr/bin/yum -y install https://download.ceph.com/rpm-nautilus/el7/noarch/ceph-release-1-1.el7.noarch.rpm",
-  #       onlyif => "/bin/rpm -qi ceph-release | grep 'not installed'",
-  #} ->
-
   exec { "clean repo cache":
          command => "/usr/bin/yum clean all",
-         #onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
   } ->
-
-  #exec { "yum install ceph-common":
-  #       command => "/usr/bin/yum -y install ceph-common",
-  #       onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
-  #       timeout => 1800,
-  #} ->
-
-  #exec { "yum update to force the installation of nautilus ceph-release in DELL hosts":
-  #       command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
-  #       onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'Architecture:'",
-  #       timeout => 3600,
-  #} ->
-
-  #exec { "yum update to force the installation of nautilus ceph-release":
-  #       command => "/usr/bin/yum -y -x puppet -x facter update",
-  #       onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'not installed'",
-  #       timeout => 3600,
-  #} ->
-
-  #exec { "yum install libvirt before the openstack-nova-compute":
-  #       command => "/usr/bin/yum -y install libvirt",
-  #       #onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
-  #       timeout => 3600,
-  #} ->
 
   package { $newrelease :
     ensure => 'installed',
   } ->
+
+  ### FF update a stein e train consiglia di disabilitare EPEL  
+  exec { "yum disable EPEL repo":
+         command => "/usr/bin/yum-config-manager --disable epel",
+         onlyif => "/bin/rpm -qa | grep centos-release-openstack-train",
+         timeout => 3600,
+  } -> 
 
   exec { "yum update complete in DELL hosts":
          command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
@@ -108,14 +69,10 @@ $cloud_role = $compute_train::cloud_role
          timeout => 3600,
   } ->
 
-  #exec { "yum update complete":
-  #       command => "/usr/bin/yum -y -x puppet -x facter update",
-  #       onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'not installed'",
-  #       timeout => 3600,
-  #} ->
-
+  ### FF disabilitando EPEl non dovrebbe piu' servire l'esclusione di leatherman
   exec { "yum update complete":
-         command => "/usr/bin/yum -y -x leatherman update",
+         #command => "/usr/bin/yum -y -x leatherman update",     
+         command => "/usr/bin/yum -y update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed'",
          timeout => 3600,
   } ->
@@ -173,12 +130,6 @@ $cloud_role = $compute_train::cloud_role
          command => "/usr/bin/mv /etc/puppet/auth.conf.rpmnew /etc/puppet/auth.conf",
          onlyif  => "/usr/bin/test -e /etc/puppet/auth.conf.rpmnew",
   } ->
-
-  #exec { "yum install openstack-neutron":
-  #       command => "/usr/bin/yum -y install openstack-neutron openstack-neutron-openvswitch openstack-neutron-common openstack-neutron-ml2",
-  #       onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
-  #       timeout => 1800,
-  #} ->
 
 ## Install generic packages
   package { $genericpackages: 
