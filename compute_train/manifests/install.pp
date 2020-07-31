@@ -50,6 +50,7 @@ $cloud_role = $compute_train::cloud_role
 
   exec { "clean repo cache":
          command => "/usr/bin/yum clean all",
+         onlyif => "/bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
   } ->
 
   package { $newrelease :
@@ -59,13 +60,13 @@ $cloud_role = $compute_train::cloud_role
   ### FF update a stein e train consiglia di disabilitare EPEL  
   exec { "yum disable EPEL repo":
          command => "/usr/bin/yum-config-manager --disable epel",
-         onlyif => "/bin/rpm -qa | grep centos-release-openstack-train",
+         onlyif => "/bin/rpm -qa | grep centos-release-openstack-train && /usr/bin/yum repolist enabled | grep epel/",
          timeout => 3600,
   } -> 
 
   exec { "yum update complete in DELL hosts":
          command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
-         onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:'",
+         onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' && /bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
          timeout => 3600,
   } ->
 
@@ -73,7 +74,7 @@ $cloud_role = $compute_train::cloud_role
   exec { "yum update complete":
          #command => "/usr/bin/yum -y -x leatherman update",     
          command => "/usr/bin/yum -y update",
-         onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed'",
+         onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' && /bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
          timeout => 3600,
   } ->
 
