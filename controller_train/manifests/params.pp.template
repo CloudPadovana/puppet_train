@@ -5,165 +5,151 @@ class controller_train::params ($cloud_role){
 
    ##########################################
    # Cloud di produzione
-   $site_fqdn = "cloud-areapd.pd.infn.it"
-   $cv_site_fqdn = "cloudveneto.ict.unipd.it"
-   $keystone_cap_fqdn = "keystone-cv.pd.infn.it"
-   $keystone_cv_fqdn = "keystone-cv.ict.unipd.it"
+   $aai_db_host = ""
+   $aai_db_name = ""
+   $aai_db_port = 0
+   $aai_db_pwd = ""
+   $aai_db_user = ""
+   $aai_mail_admins = {'Cloud Support', ''}
+   $aai_mail_host = ""
+   $aai_mail_port = 25
+   $aai_mail_pwd = ""
+   $aai_mail_sender = ""
+   $aai_mail_user = ""
    $admin_password = ''
-   $admin_token = ''
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
    $auth_url = 'http://xxx.xxx.xxx.xxx:5000'
-   #########
-   $ceilometer_connection = ''
-   $ceilometer_password = ''
-   $ceilometer_service_credentials_auth_url = ''
+   $cinder_ceph_ec_rbd_pool = ''
    $cinder_ceph_rbd_pool = ''
    $cinder_ceph_rbd_secret_uuid = ''
    $cinder_ceph_rbd_user = ''
    $cinder_db = ''
-   ## FF da queens cambia la porta, /etc/cinder/cinder.conf [keystone_authtoken] auth_uri = http://controller:5000 e auth_url = http://controller:5000
+   $cinder_default_volume_type = 'ceph-ec'
+   $cinder_enabled_backends = 'ceph,iscsi-infnpd,equallogic-unipd,ceph-ec'
    $cinder_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $cinder_password = ''
    $cinder_public_endpoint = ''
-   #$ec2_admin_password = ''
+   $cv_site_fqdn = "cloudveneto.ict.unipd.it"
    $ec2_db = ''
-   $ec2_password = ''
    $ec2_external_network = ''
    $ec2_keystone_url = ''
+   $ec2_password = ''
    $glance_api_rbd_store_pool = ''
    $glance_api_rbd_store_user = ''
    $glance_api_servers = ''
+   $glance_auth_url = ''
    $glance_db = ''
-   ## FF da queens per glance [keystone_authtoken] auth_url gira sulla porta 5000
    $glance_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $glance_password = ''
-   $keystone_admin_endpoint =  ''
-   $keystone_db =  ''
-   $keystone_public_endpoint =  ''
-   ## FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
-   ## Ma secondo la documentazione bisogna specificare l'endpoint pubblico
-   $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:5000'
-   ##
    $heat_db = ''
    $heat_metadata_server_url = ''
    $heat_password = ''
    $heat_stack_domain_admin_password = ''
    $heat_waitcondition_server_url = ''
+   $ip_ctrl1 = ''
+   $ip_ctrl2 = ''
+   $is_production = true
+   $keystone_admin_endpoint =  ''
+   $keystone_cap_fqdn = "keystone-cv.pd.infn.it"
+   $keystone_cv_fqdn = "keystone-cv.ict.unipd.it"
+   $keystone_db =  ''
+   $keystone_public_endpoint =  ''
    $logserver_for_vms = ''
    $memcached_servers = ''
    $memcached_servers_horizon = ''
    $metadata_proxy_shared_secret = '' 
-   $ml2_network_vlan_ranges = '' 
    $ml2_bridge_mappings = ''
-   ## FF in rocky in nova [neutron] auth_url passa da 35357 a 5000
+   $ml2_network_vlan_ranges = '' 
+   $mysql_admin_password = ''
    $neutron_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $neutron_db = ''
    $neutron_password = ''
-   # FF  DEPRECATED in ROCKY in  nova [neutron]url diventa [neutron]endpoint_override
-   #$neutron_url = ''
    $neutron_endpoint_override = ''
-   ##FF in rocky per neutron [keystone_authtoken] auth_url passa da 35357 a 5000
    $neutron_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000' 
-   ###
+
    $nova_api_db = ''
    $nova_cinder_endpoint_template = ''
    $nova_db = ''
-   $nova_password = ''
-   ## FF da queens nova_keystone_authtoken e nova_placement_auth_url cambiano porte da 35357 a 5000 
-   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
-   $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
-   ## FF in rocky si puo' creare il DB placement, con relativa connection url. Se non viene creato si continua ad usare solo il nova_api db
-   #$nova_placement_db = '' }
-   ###
    $nova_disk_allocation_ratio = ''
+   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
+   $nova_password = ''
+   $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
    $nova_ram_allocation_ratio = ''
-   ## FF per train
-   placement_db = '' 
    $placement_auth_url = ''
-   ##
+   placement_db = '' 
+   $placement_password = ''
    $private_key = ''
    $project_name = 'services'
    $pub_key = "ssh-rsa "   
-   #$rabbit_hosts = ''
+   $site_fqdn = "cloud-areapd.pd.infn.it"
+   $transport_url = ''
    $vip_mgmt = ''
    $vip_pub = ''
-########
-   $placement_password = ''
-   $transport_url = ''
-
-   ### AAI DB Setting
-   $aai_db_host = ""
-   $aai_db_port = 0
-   $aai_db_name = ""
-   $aai_db_user = ""
-   $aai_db_pwd = ""
-
-   $aai_mail_host = ""
-   $aai_mail_port = 25
-   $aai_mail_user = ""
-   $aai_mail_pwd = ""
-   $aai_mail_sender = ""
-   $aai_mail_admins = {'Cloud Support', ''}
-    
-   $is_production = true
+   $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'
    } 
     
    if $::controller_train::cloud_role == "is_test"    {
 
    ##########################################
    # Cloud di test
-   $site_fqdn = "cloud-areapd-test.pd.infn.it"
-   $cv_site_fqdn = "cloudveneto-test.ict.unipd.it"
-   $keystone_cap_fqdn = "keystone-cv-test.pd.infn.it"
-   $keystone_cv_fqdn = "keystone-cv-test.ict.unipd.it"
+
+   $aai_db_host = ""
+   $aai_db_name = ""
+   $aai_db_port = 0
+   $aai_db_pwd = ""
+   $aai_db_user = ""
+   $aai_mail_admins = {'Cloud Support', ''}
+   $aai_mail_host = ""
+   $aai_mail_port = 25
+   $aai_mail_pwd = ""
+   $aai_mail_sender = ""
+   $aai_mail_user = ""
    $admin_password = ''
-   $admin_token = ''
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
    $auth_url = 'http://xxx.xxx.xxx.xxx:5000'
-   #########
-   $ceilometer_connection = ''
-   $ceilometer_service_credentials_auth_url = ''
-   $ceilometer_password = ''
-   $cinder_db = ''
-   $cinder_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
-   $cinder_password = ''  
-   $cinder_public_endpoint = ''
-#######
+   $cinder_ceph_ec_rbd_pool = ''
    $cinder_ceph_rbd_pool = ''
    $cinder_ceph_rbd_secret_uuid = ''
    $cinder_ceph_rbd_user = ''
-######
-   ### FF in params.pp ha _
+   $cinder_db = ''
+   $cinder_default_volume_type = 'ceph-ec'
+   $cinder_enabled_backends = 'ceph,iscsi-infnpd,,ceph-ec'
+   $cinder_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
+   $cinder_password = ''  
+   $cinder_public_endpoint = ''
+   $cv_site_fqdn = "cloudveneto-test.ict.unipd.it"
    $dhcp_option_force = ''
-   ##
    $dnsmasq_config_file = '/etc/neutron/dnsmasq-neutron.conf'
-#########
-   $ec2_password = ''
    $ec2_db = ''
    $ec2_external_network = ''
    $ec2_keystone_url = ''
-   $glance_db = ''
-   $glance_api_servers = ''
-   $glance_password = ''
-   $glance_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
-###ceph
+   $ec2_password = ''
    $glance_api_rbd_store_pool = ''
    $glance_api_rbd_store_user = ''
-#### 
-   $keystone_admin_endpoint =  ''
-   $keystone_db =  ''
-   $keystone_public_endpoint =  ''
-   $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:5000'
+   $glance_api_servers = ''
+   $glance_auth_url = ''
+   $glance_db = ''
+   $glance_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
+   $glance_password = ''
    $heat_db = ''    
    $heat_metadata_server_url = ''
    $heat_password = ''
    $heat_stack_domain_admin_password = ''
    $heat_waitcondition_server_url = ''
+   $ip_ctrl1 = ''
+   $ip_ctrl2 = ''
+   $is_production = false
+   $keystone_admin_endpoint =  ''
+   $keystone_cap_fqdn = "keystone-cv-test.pd.infn.it"
+   $keystone_cv_fqdn = "keystone-cv-test.ict.unipd.it"
+   $keystone_db =  ''
+   $keystone_public_endpoint =  ''
    $logserver_for_vms = ''
    $memcached_servers = ''
    $memcached_servers_horizon = ''
    $metadata_proxy_shared_secret = ''
    $ml2_bridge_mappings = 'external:br-ex'
+   $mysql_admin_password = "undefined"
    $neutron_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $neutron_db = ''
    $neutron_password = ''
@@ -172,71 +158,35 @@ class controller_train::params ($cloud_role){
    $nova_api_db = ''
    $nova_cinder_endpoint_template = ''
    $nova_db = ''
-   $nova_password = ''
-   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
-   $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
-   ## FF in rocky si puo' creare il DB placement, con relativa connection url. Se non viene creato si continua ad usare solo il nova_api db
-   ## FF in train si deve creare il DB placement
-   #$nova_placement_db = '' }
-   ###
    $nova_disk_allocation_ratio = ''
+   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
+   $nova_password = ''
+   $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
    $nova_ram_allocation_ratio = ''
-   ## FF per train
-   $placement_db = ''
    $placement_auth_url = ''
-   ##
+   $placement_db = ''
+   $placement_password = ''
    $private_key = ''
    $project_name = 'service'
    $pub_key = "ssh-rsa "     
-   # $rabbit_hosts = ''  
+   $site_fqdn = "cloud-areapd-test.pd.infn.it"
+   $transport_url = ''
    $vip_mgmt = ''
    $vip_pub = ''
-####
-   $placement_password = ''
-   $transport_url = ''
-
-   ### AAI DB Setting
-   $aai_db_host = ""
-   $aai_db_port = 0
-   $aai_db_name = ""
-   $aai_db_user = ""
-   $aai_db_pwd = ""
-
-   $aai_mail_host = ""
-   $aai_mail_port = 25
-   $aai_mail_user = ""
-   $aai_mail_pwd = ""
-   $aai_mail_sender = ""
-   $aai_mail_admins = {'Cloud Support', ''}
-    
-   $is_production = false
+   $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'    
    }
-   ### Admin account on mysql
-   $mysql_admin_password = "undefined"
 
    ##########################################
    # Attributi validi sia per la cloud di test che quella di produzione
-   $admin_user = 'admin'
    $allow_automatic_dhcp_failover = true
    $allow_resize = true
-   $auth_plugin = 'password'
    $auth_strategy = 'keystone'
    $auth_type = 'password'
-   $cafile = ''
-   $ceilometer_default_log_levels='amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=WARN,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN,keystoneauth=WARN,oslo.cache=INFO,dogpile.core.dogpile=INFO,ceilometer.hardware.discovery=ERROR,ceilometer.transformer.conversions=ERROR'
-   $ceilometer_metering_time_to_live = '6912000'
-   $ceilometer_service_credentials_interface = 'internalURL'
-   $ceilometer_username = 'ceilometer'
-   $ceilometer_verbose = false
-####
-   $ceilometer_meter_dispatchers = [ 'database', 'gnocchi' ]
-   $ceilometer_event_dispatchers = [ 'database', 'gnocchi' ]
-   $ceilometer__dispatcher_gnocchi__archive_policy = "low"
-   $ceilometer__dispatcher_gnocchi__filter_service_activity = true
-####
-   $ceph_glance_api_version = '2'
+   $ceph_ec_volume_backend_name = 'ceph-ec'
+   $ceph_ec_volume_group = 'ceph-ec'
    $ceph_rados_connect_timeout = '-1'
    $ceph_rbd_ceph_conf = '/etc/ceph/ceph.conf'
+   $ceph_rbd_ceph_ec_conf = '/etc/ceph/ceph-ec.conf'
    $ceph_rbd_flatten_volume_from_snapshot = false
    $ceph_rbd_max_clone_depth = '5'
    $ceph_rbd_store_chunk_size = '4'
@@ -244,108 +194,66 @@ class controller_train::params ($cloud_role){
    $ceph_volume_driver = 'cinder.volume.drivers.rbd.RBDDriver'
    $ceph_volume_group = 'ceph'
    $cinder_ceph_rbd_exclusive_cinder_pool = true
-   $cinder_default_volume_type = 'ceph-ec'
-   $cinder_enabled_backends = 'ceph,iscsi-infnpd'
-   $cinder_glusterfs_shares_config = '/etc/cinder/shares'
    $cinder_iscsi_helper = 'tgtadm'
-   ###iscsi params
    $cinder_iscsi_nfs_nas_secure_file_permissions = false
    $cinder_iscsi_nfs_mount_point_base = '/var/lib/cinder/nfs'
    $cinder_iscsi_shares_config = '/etc/cinder/shares'
-   ####
    $cinder_lock_path = '/var/lib/cinder/tmp'
    $cinder_my_ip = $::mgmt_ip
-   $cinder_gluster_nas_volume_prov_type = 'thin'
-   $cinder_nas_volume_prov_type = 'thin'
-   $cinder_notification_driver = 'messagingv2'
    $cinder_username = 'cinder'
-   $cinder_verbose = false
-   $cinder_volume_driver = 'cinder.volume.drivers.glusterfs.GlusterfsDriver'
    $dhcp_agents_per_network = '2'
    $dhcp_driver = 'neutron.agent.linux.dhcp.Dnsmasq'
    $ec2_cache_backend ='oslo_cache.dict'
    $ec2_cache_enabled = true
    $ec2_cinder_service_type = 'volumev3'
+   $ec2_full_vpc_support = false
    $ec2_lock_path = '/var/lib/ec2-api/tmp'
    $ec2_user = 'ec2_user'
-   $ec2_full_vpc_support = false
-   #$ec2_identity_uri = $auth_url
    $ec2_log_file = '/var/log/ec2api/ec2api.log'
-   $ec2_logging_context_format_string = '\"%(asctime)s.%(msecs)03d %(levelname)s %(name)s [%(request_id)s %(user_name)s %(project_name)s] %(instance)s%(message)s\"'
    $ec2_my_ip = $vip_mgmt
    $ec2_nova_metadata_ip = $vip_mgmt
-   $ec2_verbose = false
-   ## FF da queens in poi
-   #$ec2_port = ''
-   #$ec2api_listen_port = ''
-   #$ec2_api_paste_config = ''
-   #$ec2_disable_ec2_classic = ''
-   #$ec2_nova_metadata_port = ''
-   ###
+   $enable_fip_topology_check = 'False'
+   $enabled_apis = 'osapi_compute,metadata'
+   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,PciPassthroughFilter'
    $eqlog_eqlx_group_name = 'CloudUnipdVeneto'
    $eqlog_eqlx_pool = 'default'
    $eqlog_san_ip = ''
    $eqlog_san_login = ''
    $eqlog_san_password = ''
+   $eqlog_volume_backend_name = 'equallogic-unipd'
    $eqlog_volume_driver = 'cinder.volume.drivers.dell_emc.ps.PSSeriesISCSIDriver'
    $eqlog_volume_group = 'equallogic-unipd'
-   $eqlog_volume_backend_name = 'equallogic-unipd'
-   $enable_fip_topology_check = 'False'
    $flavor = 'keystone'
-   ##
-   $glance_api_version = '2'
-   ##  $glance_container_formats = 'ami,ari,aki,bare,ovf,ova,docker'
-   $glance_image_size_cap = '26843545600'
-   $glance_notification_driver = 'messagingv2'
+   $glance_image_size_cap = '55000000000'
    $glance_api_default_store = 'rbd'
-   $glance_api_rbd_store_description = 'Ceph in replica 3'
    $glance_api_rbd_store_chunk_size = '8'
-   ##  $glance_api_node_staging_uri = 'file:///Images/staging/'
+   $glance_api_rbd_store_description = 'Ceph in replica 3'
    $glance_api_node_staging_path = '/Images/staging/'
    $glance_api_show_image_direct_url = true
-   $glance_api_show_multiple_locations = true
-   $glance_enable_v1_api = 'True'
    $glance_api_enabled_backends	= 'http:http,rbd:rbd'
    $glance_api_filesystem_store_datadir = '/Images/staging/'
-   $glance_store = 'http,rbd'
    $glance_store_datadir = '/var/lib/glance/images/'
    $glance_username = 'glance'
-   $glance_verbose = false
-   $gluster_volume_backend_name = 'gluster'
-   $gluster_volume_driver = 'cinder.volume.drivers.glusterfs.GlusterfsDriver'
-   $gluster_volume_group = 'gluster'
-   $heat_clients_keystone_auth_uri = $auth_url
    $heat_endpoint_type = 'publicURL'
    $heat_insecure = true
    $heat_stack_domain_admin = 'heat_domain_admin'
    $heat_stack_user_domain_name = 'heat'
    $heat_username = 'heat'
-   $heat_verbose = false
    $horizon_secret_key = ''
-##################
    $enable_proxy_headers_parsing = true
-##################
-   # MS: openvswitch si puo` usare al posto di neutron.agent.linux.interface.OVSInterfaceDriver                                                                                                  
-   # $interface_driver = 'neutron.agent.linux.interface.OVSInterfaceDriver'                                                                                                                      
+   # MS: openvswitch si puo` usare al posto di neutron.agent.linux.interface.OVSInterfaceDriver 
+   # $interface_driver = 'neutron.agent.linux.interface.OVSInterfaceDriver'                                                     
    $interface_driver = 'openvswitch'
-#####iscsi params
    $iscsi_volume_backend_name = 'iscsi-infnpd'
    $iscsi_volume_driver = 'cinder.volume.drivers.nfs.NfsDriver'
    $iscsi_volume_group = 'iscsi-infnpd'
-#####
-   $keystone_verbose = false
+   $keystone_auth_methods = 'sKey,password,token'
    $keystone_token_provider = 'fernet'
-   $l3_external_network_bridge = ''
-   ###
-   # FF in Pike gateway_external_network_id diventa external_network_bridge
-   #$l3_gateway_external_network_id = ''
-   $l3_external_network_id = ''
-   ###
    $ml2_enable_ipset = true
    $ml2_enable_security_group = true
-   # Shorter name for ml2_firewall_driver                                                                                                                                             
-   $ml2_firewall_driver = 'iptables_hybrid'
-   # $ml2_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'    
+   # Shorter name for ml2_firewall_driver                                                      
+   #$ml2_firewall_driver = 'iptables_hybrid'
+   $ml2_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'    
    $ml2_flat_networks = '*'
    $ml2_local_ip = $::data_ip
    $ml2_mechanism_drivers = 'openvswitch'
@@ -364,17 +272,14 @@ class controller_train::params ($cloud_role){
    $neutron_notify_nova_on_port_status_changes = true
    $neutron_service_plugins = 'router'
    $neutron_username = 'neutron'
-   $neutron_verbose = false
    ## FF in Stein the name of the service is removed
-   #$nova_cinder_catalog_info = 'volumev3:cinderv3:internalURL'
    $nova_cinder_catalog_info = 'volumev3::internalURL'
-   ###
    $nova_cpu_allocation_ratio = '4.0'
    $nova_default_schedule_zone = 'nova'
+   $nova_discover_hosts_in_cells_interval = '300'
    ### FF deprecato in PIKE
    ### MS ma la doc dice cmq di settarlo
    $nova_firewall_driver = 'nova.virt.firewall.NoopFirewallDriver'
-   ###
    $nova_inject_key = true
    $nova_inject_partition = '-1'
    $nova_inject_password = true
@@ -382,40 +287,33 @@ class controller_train::params ($cloud_role){
    $nova_scheduler_max_attempts = '10'
    $nova_host_subset_size = '10'
    $nova_username = 'nova'
-   # MS for vendordata
    $nova_vendordata_providers = 'StaticJSON'
    $nova_vendordata_jsonfile_path = '/etc/nova/vendor-data.json'
-   ###
-   $nova_verbose = false
    $ovs_enable_tunneling = true
-   $ovs_l2_population = true
-   ###
-   # FF deprecato in PIKE
-   # MS ma senza non funziona
-   $ovs_of_interface = 'ovs-ofctl'
-   ###
-   $project_domain_name = 'default'
+   $pci_titanxp_VGA = '{"name":"GP102_VGA","product_id":"1b02","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_titanxp_SND = '{"name":"GP102_SND","product_id":"10ef","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_quadro_VGA = '{"name":"QUADRO_VGA","product_id":"1e30","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_quadro_Audio = '{"name":"QUADRO_Audio","product_id":"10f7","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_quadro_USB = '{"name":"QUADRO_USB","product_id":"1ad6","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_quadro_SerialBus = '{"name":"QUADRO_SerialBus","product_id":"1ad7","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_geforcegtx_VGA = '{"name":"GK110_VGA","product_id":"1005","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_geforcegtx_SND = '{"name":"GK110_SND","product_id":"0e1a","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_t4 = '{"name":"T4","product_id":"1eb8","vendor_id":"10de","device_type":"type-PF"}'
+   $pci_v100 = '{"name":"V100","product_id":"1df6","vendor_id":"10de","device_type":"type-PCI"}'
+   $pci_passthrough_whitelist =  '{\"vendor_id\":\"10de\"}'
+   $placement_username = 'placement'
+   $project_domain_name = 'Default'
    $quota_network = '1'
    $quota_subnet = '1'
    $quota_port = '51'
    $quota_router = '0'
    $quota_floatingip = '0'
    $region_name = 'regionOne'
-   #$scheduler_default_filters e' stato sostituito con enabled_filters
-###  FF CoreFilter, DiskFilter and RamFilter deprecated in Stein. RetryFilter deprecated in Train.
-   #$enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,RamFilter,CoreFilter,AggregateRamFilter,AggregateCoreFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
-#   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
-###
-## FF Aggiungo PciPassthroughFilter che e' nei params.pp ma non nel template
-   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,PciPassthroughFilter'
    $service_metadata_proxy = true
    $token_expiration = '32400'
-   $user_domain_name = 'default'
    $use_neutron = true
-####
+   $user_domain_name = 'default'
    $vnc_enabled = true
-   $placement_username = 'placement'
-   $enabled_apis = 'osapi_compute,metadata'
    
   ############################################################################
   #  Security params
@@ -429,6 +327,7 @@ class controller_train::params ($cloud_role){
   $keystone_infn_key = "/etc/grid-security/keystone-infn-key.pem"
   $keystone_unipd_cert = "/etc/grid-security/keystone-unipd-cert.pem"
   $keystone_unipd_key = "/etc/grid-security/keystone-unipd-key.pem"
+  $cafile = "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
   $crl_file_list = []
 
   ############################################################################
@@ -438,6 +337,7 @@ class controller_train::params ($cloud_role){
   $enable_aai_ext = false
   $cap_repo_url = "http://artifacts.pd.infn.it/packages/CAP/openstack-security-integrations_centos7_train.repo"
   $notification_plan = "5,10,20"
+  $help_url = "https://${site_fqdn}/Users_Guide/html-desktop/"
 
   ############################################################################
   #  Shibboleth params
