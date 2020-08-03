@@ -78,6 +78,23 @@ class compute_train::neutron inherits compute_train::params {
 
   compute_train::neutron::do_config { 'neutron_lock_path': conf_file => '/etc/neutron/neutron.conf', section => 'oslo_concurrency', param => 'lock_path', value => $compute_train::params::neutron_lock_path, }
 
+
+   compute_train::neutron::do_config { "neutron_amqp_durable_queues":
+           conf_file => '/etc/neutron/neutron.conf',
+           section   => 'oslo_messaging_rabbit',
+           param     => 'amqp_durable_queues',
+           value    => $compute_train::params::amqp_durable_queues   ,
+         }
+
+   compute_train::neutron::do_config { "neutron_rabbit_ha_queues":
+           conf_file => '/etc/neutron/neutron.conf',
+           section   => 'oslo_messaging_rabbit',
+           param     => 'rabbit_ha_queues',
+           value    => $compute_train::params::rabbit_ha_queues   ,
+         }
+
+
+
 #
 #ml2_conf.ini
 #

@@ -131,6 +131,13 @@ define remove_config ($conf_file, $section, $param, $value) {
 #######Proxy headers parsing
   controller_train::configure_glance::do_config { 'glance_enable_proxy_headers_parsing': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_train::params::enable_proxy_headers_parsing, }
 
+
+  controller_train::configure_glance::do_config { 'glance_api_rabbit_ha_queues': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_train::params::rabbit_ha_queues, }
+  controller_train::configure_glance::do_config { 'glance_api_amqp_durable_queues': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_messaging_rabbit', param => 'amqp_durable_queues', value => $controller_train::params::amqp_durable_queues, }
+
+
+
+
      
 ## PEM da train glance-registry non c'e' piu'
 #  glance-registry.conf

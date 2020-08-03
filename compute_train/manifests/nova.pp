@@ -185,6 +185,21 @@ compute_train::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
 #  compute_train::nova::do_config { 'nova_notification_driver': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $compute_train::params::nova_notification_driver, }
 
 
+   compute_train::nova::do_config { "nova_amqp_durable_queues":
+           conf_file => '/etc/nova/nova.conf',
+           section   => 'oslo_messaging_rabbit',
+           param     => 'amqp_durable_queues',
+           value    => $compute_train::params::amqp_durable_queues,
+         }
+
+   compute_train::nova::do_config { "nova_rabbit_ha_queues":
+           conf_file => '/etc/nova/nova.conf',
+           section   => 'oslo_messaging_rabbit',
+           param     => 'rabbit_ha_queues',
+           value    => $compute_train::params::rabbit_ha_queues, 
+         }
+
+
 # GPU specific setting and some setting for better performance for SSD disk for cld-dfa-gpu-01
  if ($::mgmt_ip == "192.168.60.107") {
   compute_train::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_train::params::pci_passthrough_whitelist, }

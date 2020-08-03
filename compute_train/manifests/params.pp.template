@@ -95,6 +95,7 @@ if $::compute_train::cloud_role == "is_prod_localstorage" or $::compute_train::c
 w  
   $allow_resize            = true     
   $allow_overlapping_ips   = true
+  $amqp_durable_queues = true
   $auth_strategy = 'keystone'
   $auth_type = 'password'
   $cafile                  = '/etc/grid-security/certificates/cafile.pem'
@@ -146,6 +147,7 @@ w
   $pci_v100 = '{"name":"V100","product_id":"1df6","vendor_id":"10de","device_type":"type-PCI"}'
   $pci_passthrough_whitelist   = '{\"vendor_id\":\"10de\"}'
   $project_domain_name = 'default'
+  $rabbit_ha_queues = true
   $region_name             = 'regionOne'       
   $service_plugins         = 'router'
   $tenant_network_types    = 'gre'

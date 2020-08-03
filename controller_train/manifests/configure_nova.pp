@@ -144,6 +144,9 @@ define do_config_list ($conf_file, $section, $param, $values) {
   controller_train::configure_nova::do_config_list { "nova_pci_alias": conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'alias', values => [ "$controller_train::params::pci_titanxp_VGA", "$controller_train::params::pci_titanxp_SND", "$controller_train::params::pci_quadro_VGA", "$controller_train::params::pci_quadro_Audio", "$controller_train::params::pci_quadro_USB", "$controller_train::params::pci_quadro_SerialBus", "$controller_train::params::pci_geforcegtx_VGA", "$controller_train::params::pci_geforcegtx_SND","$controller_train::params::pci_t4","$controller_train::params::pci_v100" ], }
   controller_train::configure_nova::do_config { 'nova_pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $controller_train::params::pci_passthrough_whitelist, }
 
+  controller_train::configure_nova::do_config { 'nova_rabbit_ha_queues': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_train::params::rabbit_ha_queues, }
+  controller_train::configure_nova::do_config { 'nova_amqp_durable_queues': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_rabbit', param => 'amqp_durable_queues', value => $controller_train::params::amqp_durable_queues, }
+
 
 
 ######nova_policy and 00-nova-placement are copied from /controller_train/files dir       

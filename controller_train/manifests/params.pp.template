@@ -178,6 +178,7 @@ class controller_train::params ($cloud_role){
 
    ##########################################
    # Attributi validi sia per la cloud di test che quella di produzione
+   $amqp_durable_queues = true
    $allow_automatic_dhcp_failover = true
    $allow_resize = true
    $auth_strategy = 'keystone'
@@ -308,6 +309,7 @@ class controller_train::params ($cloud_role){
    $quota_port = '51'
    $quota_router = '0'
    $quota_floatingip = '0'
+   $rabbit_ha_queues = true
    $region_name = 'regionOne'
    $service_metadata_proxy = true
    $token_expiration = '32400'

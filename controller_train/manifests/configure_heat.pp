@@ -354,5 +354,21 @@ define remove_config ($conf_file, $section, $param, $value) {
     param     => 'enable_proxy_headers_parsing',
     value     => $controller_train::params::enable_proxy_headers_parsing,
   }
+
+  controller_train::configure_heat::do_config { 'heat_rabbit_ha_queues':
+    conf_file => '/etc/heat/heat.conf',
+    section   => 'oslo_messaging_rabbit',
+    param     => 'rabbit_ha_queues',
+    value     => $controller_train::params::rabbit_ha_queues,
+  }
+
+  controller_train::configure_heat::do_config { 'heat_amqp_durable_queues':
+    conf_file => '/etc/heat/heat.conf',
+    section   => 'oslo_messaging_rabbit',
+    param     => 'amqp_durable_queues',
+    value     => $controller_train::params::amqp_durable_queues,
+  }
+
+
        
 }

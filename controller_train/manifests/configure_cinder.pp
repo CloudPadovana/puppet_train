@@ -114,6 +114,12 @@ define remove_config ($conf_file, $section, $param, $value) {
 #######Proxy headers parsing
 controller_train::configure_cinder::do_config { 'cinder_enable_proxy_headers_parsing': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_train::params::enable_proxy_headers_parsing, }       
 ####################       
+
+  controller_train::configure_cinder::do_config { 'cinder_rabbit_ha_queues': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_train::params::rabbit_ha_queues, }
+  controller_train::configure_cinder::do_config { 'cinder_amqp_durable_queues': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'amqp_durable_queues', value => $controller_train::params::amqp_durable_queues, }
+
+
+
        
 # Settings needed for ceilometer (but we don't use anymore ceilometer)
 #   controller_train::configure_cinder::do_config { 'cinder_notification_driver': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_train::params::cinder_notification_driver, }

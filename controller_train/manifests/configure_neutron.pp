@@ -91,6 +91,11 @@ controller_train::configure_neutron::do_config { 'neutron_enable_proxy_headers_p
    controller_train::configure_neutron::do_config { 'neutron_quota_router': conf_file => '/etc/neutron/neutron.conf', section => 'quotas', param => 'quota_router', value => $controller_train::params::quota_router, }
    controller_train::configure_neutron::do_config { 'neutron_quota_floatingip': conf_file => '/etc/neutron/neutron.conf', section => 'quotas', param => 'quota_floatingip', value => $controller_train::params::quota_floatingip, }
 
+  controller_train::configure_neutron::do_config { 'neutron_rabbit_ha_queues': conf_file => '/etc/neutron/neutron.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_train::params::rabbit_ha_queues, }
+  controller_train::configure_neutron::do_config { 'neutron_amqp_durable_queues': conf_file => '/etc/neutron/neutron.conf', section => 'oslo_messaging_rabbit', param => 'amqp_durable_queues', value => $controller_train::params::amqp_durable_queues, }
+
+
+
 
    # ml2_conf.ini
 
