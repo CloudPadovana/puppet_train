@@ -1,0 +1,13 @@
+--- application.py	2020-08-05 13:27:27.798088979 +0200
++++ application.py.new	2020-08-05 12:16:49.406539618 +0200
+@@ -89,6 +89,10 @@
+     else:
+         LOG.warning(six.text_type(error))
+ 
++    # Keystone-patch-0002
++    if error.code >= 400:
++        return flask.redirect("https://%s/dashboard/auth/auth_error/" % flask.request.host)
++
+     # Render the exception to something user "friendly"
+     error_message = error.args[0]
+     message = oslo_i18n.translate(error_message, _best_match_language())
