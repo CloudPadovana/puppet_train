@@ -66,15 +66,13 @@ $cloud_role = $compute_train::cloud_role
 
   exec { "yum update complete in DELL hosts":
          command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
-         onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' && /bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
+         onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'rocky'",
          timeout => 3600,
   } ->
 
-  ### FF disabilitando EPEl non dovrebbe piu' servire l'esclusione di leatherman
   exec { "yum update complete":
-         #command => "/usr/bin/yum -y -x leatherman update",     
          command => "/usr/bin/yum -y update",
-         onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' && /bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
+         onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'rocky'",
          timeout => 3600,
   } ->
 
