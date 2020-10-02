@@ -25,17 +25,17 @@ include compute_train::install
 
  define do_config ($conf_file, $section, $param, $value) {
            exec { "${name}":
-                             command     => "/usr/bin/openstack-config --set ${conf_file} ${section} ${param} \"${value}\"",
-                             require     => Package['openstack-utils'],
-                             unless      => "/usr/bin/openstack-config --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
+                             command     => "/usr/bin/crudini --set ${conf_file} ${section} ${param} \"${value}\"",
+                             require     => Package['crudini'],
+                             unless      => "/usr/bin/crudini --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
                 }
          }
 
    define remove_config ($conf_file, $section, $param, $value) {
            exec { "${name}":
-                              command     => "/usr/bin/openstack-config --del ${conf_file} ${section} ${param}",
-                              require     => Package['openstack-utils'],
-                              onlyif      => "/usr/bin/openstack-config --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
+                              command     => "/usr/bin/crudini --del ${conf_file} ${section} ${param}",
+                              require     => Package['crudini'],
+                              onlyif      => "/usr/bin/crudini --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
                 }
         }
 
@@ -169,6 +169,16 @@ define do_config_list ($conf_file, $section, $param, $values) {
   compute_train::nova::do_config { 'nova_cinder_cafile': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'cafile', value => $compute_train::params::cafile, }
   compute_train::nova::do_config { 'nova_cinder_endpoint_template': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'endpoint_template', value => $compute_train::params::endpoint_template, }
   compute_train::nova::do_config { 'nova_cinder_os_region_name': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'os_region_name', value => $compute_train::params::region_name, }
+  compute_train::nova::do_config { 'nova_cinder_auth_url': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'auth_url', value => $compute_train::params::cinder_keystone_auth_url, }
+  compute_train::nova::do_config { 'nova_cinder_auth_type': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'auth_type', value => $compute_train::params::auth_type, }
+  compute_train::nova::do_config { 'nova_cinder_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'project_domain_name', value => $compute_train::params::project_domain_name, }
+  compute_train::nova::do_config { 'nova_cinder_user_domain_name': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'user_domain_name', value => $compute_train::params::user_domain_name, }
+  compute_train::nova::do_config { 'nova_cinder_region_name': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'region_name', value => $compute_train::params::region_name, }
+  compute_train::nova::do_config { 'nova_cinder_project_name': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'project_name', value => $compute_train::params::project_name, }
+  compute_train::nova::do_config { 'nova_cinder_username': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'username', value => $compute_train::params::cinder_username, }
+  compute_train::nova::do_config { 'nova_cinder_password': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'password', value => $compute_train::params::cinder_password, }
+
+
 
 #### per https nel compute non dovrebbe servire
 compute_train::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_train::params::enable_proxy_headers_parsing, }
@@ -201,7 +211,7 @@ compute_train::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
 
 
 # GPU specific setting and some setting for better performance for SSD disk for cld-dfa-gpu-01
- if ($::mgmt_ip == "192.168.60.107") {
+ if ($::mgmtnw_ip == "192.168.60.107") {
   compute_train::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_train::params::pci_passthrough_whitelist, }
 
    compute_train::nova::do_config_list { "pci_alias":
@@ -223,7 +233,7 @@ compute_train::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
 }
 
 # GPU specific setting and some setting for better performance for SSD disk for cld-dfa-gpu-02
- if ($::mgmt_ip == "192.168.60.108") {
+ if ($::mgmtnw_ip == "192.168.60.108") {
   compute_train::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_train::params::pci_passthrough_whitelist, }
 
    compute_train::nova::do_config_list { "pci_alias":
@@ -244,7 +254,7 @@ compute_train::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
 }
 
 # GPU specific setting and some setting for better performance for SSD disk for cld-np-gpu-01
- if ($::mgmt_ip == "192.168.60.128") {
+ if ($::mgmtnw_ip == "192.168.60.128") {
   compute_train::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_train::params::pci_passthrough_whitelist, }
 
    compute_train::nova::do_config_list { "pci_alias":
