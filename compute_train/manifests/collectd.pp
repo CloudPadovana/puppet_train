@@ -3,7 +3,8 @@ class compute_train::collectd inherits compute_train::params {
     $collectdpackages= [ 'collectd', 'collectd-virt' ]
   
     package { $collectdpackages :
-                       ensure => 'installed',
+              ensure => 'installed',
+              install_options => ['--enablerepo', 'epel'],
                    }
                    
 

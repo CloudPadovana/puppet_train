@@ -2,11 +2,33 @@ class compute_train::firewall inherits compute_train::params {
 
 #include compute_train::params
 
+  $fwpackages = [ "firewalld" ]
+
+  package { $fwpackages: ensure => "installed" }
+
+
+
+if $operatingsystemrelease =~ /^7.*/ {
   service { "NetworkManager":
              ensure      => stopped,
              enable      => false,
           }
-       
+}       
+
+if $operatingsystemrelease =~ /^8.*/ {
+# Change backend from nftables to iptables
+     $fwbackend = 'iptables'
+     augeas {"Change firewalld backend from nftables to iptables":
+       context => "/files/etc/firewalld/firewalld.conf",
+       changes => "set FirewallBackend iptables",
+       onlyif  => "get FirewallBackend != iptables",
+       require => Package["firewalld"],
+       notify => Service['firewalld'],
+            }
+
+}
+
+
   
   service { "firewalld":
              ensure      => running,
@@ -67,7 +89,7 @@ class compute_train::firewall inherits compute_train::params {
 
 # ntpd
   exec { "open-port-123":
-    command=> "/usr/bin/firewall-cmd --add-port=123/udp; /usr/bin/firewall-cmd --permanent --add-port=16509/udp",
+    command=> "/usr/bin/firewall-cmd --add-port=123/udp; /usr/bin/firewall-cmd --permanent --add-port=123/udp",
     unless=> "/usr/bin/firewall-cmd --query-port 123/udp | grep yes  | wc -l | xargs test 1 -eq",
        }
 

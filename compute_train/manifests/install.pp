@@ -3,6 +3,9 @@ class compute_train::install inherits compute_train::params {
 
 $cloud_role = $compute_train::cloud_role          
 
+
+
+
 ### Repository settings (remove old rpm and install new one)
   
   define removepackage {
@@ -21,10 +24,28 @@ $cloud_role = $compute_train::cloud_role
 
   $newrelease =  'centos-release-openstack-train'
 
-  $genericpackages = [   "openstack-utils",
-                         "yum-plugin-priorities",
-                         "ipset",
-                         "sysfsutils", ]
+  $yumutils = 'yum-utils'
+
+case $operatingsystemrelease {
+    /^7.*/: {
+        $centos7 = true
+        $centos8 = false
+        $pythonnetwork = 'python2-networkx.noarch'
+        $genericpackages = ["crudini",
+                            "yum-plugin-priorities",
+                            "ipset",
+                            "sysfsutils", ]
+    }
+    /^8.*/: {
+        $centos7 = false
+        $centos8 = true
+        $pythonnetwork = 'python3-networkx.noarch'
+        $genericpackages = ["crudini",
+                            "ipset",
+                            "sysfsutils", ]
+    }
+}
+
 
   $neutronpackages = [   "openstack-neutron",
                          "openstack-neutron-openvswitch",
@@ -48,9 +69,31 @@ $cloud_role = $compute_train::cloud_role
      $oldpackage :
   } ->
 
+
+# enable PowerTools repo (only for CentOS8)
+
+
+  package { $yumutils :
+    ensure => 'installed',
+  } ->
+
+  exec { "yum enable PowerTools repo":
+         path => "/usr/bin",
+         command => "yum-config-manager --enable PowerTools",
+         unless => "$centos7 || /usr/bin/yum repolist enabled | grep PowerTools",
+         timeout => 3600,
+         require => Package[$yumutils],
+  }
+
+
+#  exec { "clean repo cache":
+#         command => "/usr/bin/yum clean all",
+#         onlyif => "/bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
+#  } ->
+# Esegue yum clean all once (lo si fa a meno che non stiamo gia` usando il repo train)
   exec { "clean repo cache":
          command => "/usr/bin/yum clean all",
-         onlyif => "/bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
+         unless => "/bin/rpm -q centos-release-openstack-train",
   } ->
 
   package { $newrelease :
@@ -59,22 +102,28 @@ $cloud_role = $compute_train::cloud_role
 
   ### FF update a stein e train consiglia di disabilitare EPEL  
   exec { "yum disable EPEL repo":
-         command => "/usr/bin/yum-config-manager --disable epel",
-         onlyif => "/bin/rpm -qa | grep centos-release-openstack-train && /usr/bin/yum repolist enabled | grep epel/",
+         command => "/usr/bin/yum-config-manager --disable epel*",
+         onlyif => "/bin/rpm -qa | grep centos-release-openstack-train && /usr/bin/yum repolist enabled | grep epel",
          timeout => 3600,
+         require => Package[$yumutils],
   } -> 
 
-  exec { "yum update complete in DELL hosts":
+#
+
+
+exec { "yum update for update from Rocky in DELL hosts":
          command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'rocky'",
          timeout => 3600,
   } ->
 
-  exec { "yum update complete":
+  exec { "yum update for update from Rocky":
          command => "/usr/bin/yum -y update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'rocky'",
          timeout => 3600,
   } ->
+
+
 
 # Rename nova config file  
   exec { "mv_nova_conf_old":
@@ -145,6 +194,23 @@ $cloud_role = $compute_train::cloud_role
     ensure => "installed",
     require => Package[$newrelease]
   } ->
+
+
+# Eseguo uno yum update se il pacchetto python*-networkx.noarch non proviene dal repo train
+# (Il nome del pacchetto varia tra centos7 e centos8)
+# Serve almeno per installazioni da scratch su centos8
+  exec { "yum update in DELL hosts":
+         command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
+         onlyif => "/bin/rpm -q dell-system-update &&  /usr/bin/yum list installed | grep $pythonnetwork | grep -v 'centos-openstack-train'",
+         timeout => 3600,
+  } ->
+
+  exec { "yum update":
+         command => "/usr/bin/yum -y update",
+         onlyif => "/bin/rpm -q dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep $pythonnetwork | grep -v 'centos-openstack-train'",
+         timeout => 3600,
+  } ->
+
   
   file_line { '/etc/sudoers.d/neutron  syslog':
                path   => '/etc/sudoers.d/neutron',

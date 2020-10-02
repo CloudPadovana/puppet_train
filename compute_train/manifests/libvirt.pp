@@ -5,9 +5,24 @@ include compute_train::params
    $libvirtpackages = [ "libvirt" ]
   
      package { $libvirtpackages: ensure => "installed" }
-  
+
+
+if $operatingsystemrelease =~ /^8.*/ {
+
+    exec { "Disable socket activation mode for libvirt":
+         path => "/usr/bin",
+         command => "systemctl mask libvirtd.socket libvirtd-ro.socket libvirtd-admin.socket libvirtd-tcp.socket libvirtd-tls.socket",
+         onlyif => "systemctl | grep 'libvirtd.*socket' | grep -v 'masked'",
+         require => Package["libvirt"],
+         notify => Service['libvirtd'],
+  }
+
+}  
+#
+# systemctl mask libvirtd.socket libvirtd-ro.socket libvirtd-admin.socket libvirtd-tcp.socket libvirtd-tls.socket
+# unless systemctl | grep 'libvirtd.*socket.*masked'
     
-     service { "libvirtd":
+     service { 'libvirtd':
         ensure => running,
         enable => true,
         hasstatus => true,
@@ -36,11 +51,15 @@ include compute_train::params
         notify => Service['libvirtd'],
       }
 
-      file_line { '/etc/sysconfig/libvirtd libvirtd args':
-        path  => '/etc/sysconfig/libvirtd',
-        line  => 'LIBVIRTD_ARGS="--listen"',
-        match => 'LIBVIRTD_ARGS=',
-      }
+
+     $args_val = '--listen'
+
+     augeas {"/etc/sysconfig/libvirtd libvirtd args":
+       context => "/files/etc/sysconfig/libvirtd",
+       changes => "set LIBVIRTD_ARGS '\"${args_val}\"'",
+       onlyif  => "get LIBVIRTD_ARGS != '\"${args_val}\"'",
+            }
+
 
       file_line { '/etc/libvirt/qemu.conf user':
         path  => '/etc/libvirt/qemu.conf',

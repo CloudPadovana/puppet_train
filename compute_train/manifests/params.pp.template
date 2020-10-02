@@ -103,7 +103,7 @@ w
   
 
   ###cpu e ram allocation per cld-np-09
-   if $::mgmt_ip == "" {
+   if $::mgmtnw_ip == "" {
         $cpu_allocation_ratio    = '1.0'
         $ram_allocation_ratio    = '1.0'
         }
@@ -122,7 +122,7 @@ w
   $libvirt_inject_part     = '-1'     
   $libvirt_inject_pass     = true       
   $mechanism_drivers       = 'openvswitch'       
-  $my_ip = $::mgmt_ip
+  $my_ip = $::mgmtnw_ip
   $neutron_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'       
   $neutron_lock_path               = '/var/lib/neutron/tmp'       
   $neutron_username      = 'neutron'       
@@ -134,7 +134,7 @@ w
   $nova_preallocate_images    	= 'space'
   $nova_username         = 'nova'     
   $nova_use_neutron = true
-  $ovs_local_ip            = $::data_ip       
+  $ovs_local_ip            = $::datanw_ip       
   $pci_titanxp_VGA = '{"name":"GP102_VGA","product_id":"1b02","vendor_id":"10de","device_type":"type-PCI"}'
   $pci_titanxp_SND = '{"name":"GP102_SND","product_id":"10ef","vendor_id":"10de","device_type":"type-PCI"}'
   $pci_quadro_VGA = '{"name":"QUADRO_VGA","product_id":"1e30","vendor_id":"10de","device_type":"type-PCI"}'
