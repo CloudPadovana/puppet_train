@@ -83,7 +83,7 @@ case $operatingsystemrelease {
          unless => "$centos7 || /usr/bin/yum repolist enabled | grep PowerTools",
          timeout => 3600,
          require => Package[$yumutils],
-  }
+  } ->
 
 
 #  exec { "clean repo cache":
