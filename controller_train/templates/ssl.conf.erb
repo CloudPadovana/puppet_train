@@ -119,7 +119,6 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     OIDCOAuthClientID <%=@infncloud_clientid%>
     OIDCOAuthClientSecret <%=@infncloud_secret%>
     OIDCOAuthRemoteUserClaim sub
-    OIDCOAuthServerMetadataURL = https://iam.cloud.infn.it/.well-known/openid-configuration
 
     <Location ~ "/v3/OS-FEDERATION/identity_providers/infncloud/protocols/oidc/auth">
         Authtype oauth20
