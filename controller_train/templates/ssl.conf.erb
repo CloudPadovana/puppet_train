@@ -79,12 +79,13 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
         ShibRequestSetting applicationId infn_ssoapp
     </Location>
 
+<% if @oidc_intro_ep != "" and (@enable_oidc or @enable_infncloud) -%>
+    OIDCOAuthIntrospectionEndpoint <%=@oidc_intro_ep%>
+<% end -%>
+
 <% if @enable_oidc -%>
     OIDCRedirectURI https://<%=@keystone_cap_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect
     OIDCMetadataDir <%=@oidc_md_dir-%>/<%=@keystone_cap_fqdn%>
-<% if @oidc_intro_ep != "" -%>
-    OIDCOAuthIntrospectionEndpoint <%=@oidc_intro_ep%>
-<% end -%>
 
 <% @oidc_providers.each do | prov_id, prov_data |
      enc_iss = scope.function_encode_iss([ prov_data["iss"] ])["url"] -%>
@@ -113,32 +114,18 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     </Location>
 
 <% end -%><%# end of @enable_oidc %>
-<% end -%><%# end of @enable_aai_ext %>
 
-<% unless @is_production -%>
-### FEDE oidc ###
-
-    <Location "/v3/auth/OS-FEDERATION/identity_providers/dodas/protocols/oidc/websso">
-      AuthType openid-connect
-      OIDCDiscoverURL https://keystone-cv-test.pd.infn.it:443/v3/auth/OS-FEDERATION/websso/oidc/redirect?iss=https%3A%2F%2Fdodas-iam.cloud.cnaf.infn.it%2F
-      Require claim iss:https://dodas-iam.cloud.cnaf.infn.it/
-      LogLevel warn
-    </Location>
-
-    <Location ~ "/v3/OS-FEDERATION/identity_providers/dodas/protocols/oidc/auth">
+<% if @enable_infncloud and @oidc_providers.has_key?("infncloud")
+    prov_data = @oidc_providers["infncloud"] -%>
+    <Location ~ "/v3/OS-FEDERATION/identity_providers/infncloud/protocols/<%=prov_data["protocol"]%>/auth">
         Authtype oauth20
-        Require  claim iss:https://dodas-iam.cloud.cnaf.infn.it/
+        Require  claim iss:<%=prov_data["iss"]%>
         LogLevel warn
     </Location>
- 
-### questo forse non serve ###
-    <Location ~ "/v3/auth/OS-FEDERATION/websso/oidc">
-      AuthType  openid-connect
-      Require   valid-user
-      LogLevel warn
-    </Location>
-###
-<% end -%>
+<% end -%><%# end of @enable_infncloud %>
+
+<% end -%><%# end of @enable_aai_ext %>
+
 </VirtualHost>
 
 #######################################################################################################################

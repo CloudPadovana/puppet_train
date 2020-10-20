@@ -50,7 +50,7 @@ class controller_train ($cloud_role_foreman = "undefined") {
   }
 
   # Configure OpenIdc if AII and openidc are enabled
-  if ($::controller_train::params::enable_aai_ext and $::controller_train::params::enable_oidc)  {
+  if ($::controller_train::params::enable_aai_ext and ($::controller_train::params::enable_oidc or $::controller_train::params::enable_infncloud))  {
     class {'controller_train::configure_openidc':}
   }
  

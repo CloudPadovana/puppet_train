@@ -366,10 +366,12 @@ class controller_train::params ($cloud_role){
   if $::controller_train::cloud_role == "is_production" {
 
     $enable_oidc = false
+    $enable_infncloud = false
 
   } else {
 
-    $enable_oidc      = true
+    $enable_oidc      = false
+    $enable_infncloud = false
     $oidc_passphrase  = "xxxxxxxxxxx"
     $oidc_md_dir      = "/var/cache/httpd/mod_auth_openidc/metadata"
     $oidc_intro_ep    = ""
@@ -379,6 +381,7 @@ class controller_train::params ($cloud_role){
         "metadata"    => "https://dodas-iam.cloud.cnaf.infn.it/.well-known/openid-configuration",
         "iss"         => "https://dodas-iam.cloud.cnaf.infn.it/oidc/",
         "descr"       => "DODAS IAM",
+        "protocol"    => "oidc",
         "map_tag"     => "dodas_sso",
         "map_local"   => "[{\"user\" : {\"name\" : \"{0}\", \"type\" : \"ephemeral\", \"email\" : \"{1}\" }, \"group\" : { \"id\" : \"*****\" }}]",
         "map_remote"  => "[{ \"type\" : \"OIDC-preferred_username\" }, { \"type\" : \"OIDC-email\" }]",
