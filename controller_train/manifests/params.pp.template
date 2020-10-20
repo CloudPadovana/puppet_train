@@ -406,6 +406,8 @@ class controller_train::params ($cloud_role){
       }
     }
 
+    $infncloud_clientid   = ""
+    $infncloud_secret     = ""
   }
 
 }
