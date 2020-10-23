@@ -120,7 +120,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     OIDCOAuthClientSecret    <%=@infncloud_secret%>
     OIDCOAuthRemoteUserClaim sub
 
-    <Location ~ "/v3/OS-FEDERATION/identity_providers/infn-cc/protocols/oidc/auth">
+    <Location ~ "/v3/OS-FEDERATION/identity_providers/infn-cc/protocols/openid/auth">
         Authtype oauth20
         Require  claim iss:https://iam.cloud.infn.it/
         LogLevel warn

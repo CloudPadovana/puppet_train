@@ -125,11 +125,22 @@ define do_config_list ($conf_file, $section, $param, $values) {
       value     => 'Shib-Identity-Provider',
     }
 
-    controller_train::configure_keystone::do_config { "keystone_oidc_attr":
-      conf_file => '/etc/keystone/keystone.conf',
-      section   => 'openid',
-      param     => 'remote_id_attribute',
-      value     => 'HTTP_OIDC_ISS',
+    if $enable_oidc {
+      controller_train::configure_keystone::do_config { "keystone_oidc_attr":
+        conf_file => '/etc/keystone/keystone.conf',
+        section   => 'openid',
+        param     => 'remote_id_attribute',
+        value     => 'HTTP_OIDC_ISS',
+      }
+    }
+
+    if $enable_infncloud {
+      controller_train::configure_keystone::do_config { "keystone_oidc_attr":
+        conf_file => '/etc/keystone/keystone.conf',
+        section   => 'openid',
+        param     => 'remote_id_attribute',
+        value     => 'OIDC_CLAIM_iss',
+      }
     }
 
     file { "/etc/keystone/policy.json":
