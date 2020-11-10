@@ -6,3 +6,7 @@ OIDCCacheShmEntrySizeMax 65536
 OIDCClaimDelimiter       ;
 <% end -%><%# end of @enable_oidc %>
 
+<% if @enable_infncloud -%>
+OIDCIDTokenIatSlack      3600
+<% end -%><%# end of @enable_infncloud %>
+
