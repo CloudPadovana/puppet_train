@@ -67,6 +67,8 @@ class compute_train::service inherits compute_train::params {
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
                             ensure      => directory,
+                            owner   => nova,
+                            group   => nova,
                             require     => Package["openstack-nova-common"],
                        }
                              }
