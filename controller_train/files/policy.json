@@ -11,7 +11,7 @@
 
     "identity:get_project": "rule:admin_required or project_id:%(target.project.id)s or role:project_manager",
 
-    "identity:get_user": "rule:admin_or_owner or role:project_manager",
+    "identity:get_user": "rule:admin_or_owner or role:project_manager or role:monitoring",
 
     "identity:list_grants": "rule:admin_required or rule:prjman_role",
 
