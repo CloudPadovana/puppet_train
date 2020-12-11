@@ -79,8 +79,9 @@ case $operatingsystemrelease {
 
   exec { "yum enable PowerTools repo":
          path => "/usr/bin",
-         command => "yum-config-manager --enable PowerTools",
-         unless => "$centos7 || /usr/bin/yum repolist enabled | grep PowerTools",
+#         command => "yum-config-manager --enable PowerTools",
+         command => "yum-config-manager --enable powertools",
+         unless => "$centos7 || /usr/bin/yum repolist enabled | grep -i powertools",
          timeout => 3600,
          require => Package[$yumutils],
   } ->
