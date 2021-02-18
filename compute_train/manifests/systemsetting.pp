@@ -64,6 +64,13 @@ include compute_train::params
              path        => '/etc/grid-security/certificates/INFN-CA.pem',
         }
 
+   file {'CloudVenetoCAs.pem':
+             source      => 'puppet:///modules/compute_train/CloudVenetoCAs.pem',
+             path        => '/etc/grid-security/certificates/CloudVenetoCAs.pem',
+        }
+
+
+
    package { "ca_TERENA-SSL-CA-3":
              source   => "http://artifacts.pd.infn.it/packages/CAP/misc/CentOS7/noarch/ca_TERENA-SSL-CA-3-1.0-1.el7.centos.noarch.rpm",
              provider => "rpm",
