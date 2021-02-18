@@ -57,13 +57,13 @@ define remove_config ($conf_file, $section, $param, $value) {
 
    controller_train::configure_cinder::do_config { 'cinder_lock_path': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_concurrency', param => 'lock_path', value => $controller_train::params::cinder_lock_path, }
 ##########Iscsi
-   controller_train::configure_cinder::do_config { 'cinder_iscsi_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_group', value => $controller_train::params::iscsi_volume_group, }
-   controller_train::configure_cinder::do_config { 'cinder_iscsi_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_backend_name', value => $controller_train::params::iscsi_volume_backend_name, }
-   controller_train::configure_cinder::do_config { 'cinder_iscsi_volume_driver': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_driver', value => $controller_train::params::iscsi_volume_driver, }
-   controller_train::configure_cinder::do_config { 'cinder_iscsi_shares_config': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_shares_config', value => $controller_train::params::cinder_iscsi_shares_config, }
-   controller_train::configure_cinder::do_config { 'cinder_iscsi_nfs_mount_point_base': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_mount_point_base', value => $controller_train::params::cinder_iscsi_nfs_mount_point_base, }
+##   controller_train::configure_cinder::do_config { 'cinder_iscsi_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_group', value => $controller_train::params::iscsi_volume_group, }
+##   controller_train::configure_cinder::do_config { 'cinder_iscsi_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_backend_name', value => $controller_train::params::iscsi_volume_backend_name, }
+##   controller_train::configure_cinder::do_config { 'cinder_iscsi_volume_driver': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_driver', value => $controller_train::params::iscsi_volume_driver, }
+##   controller_train::configure_cinder::do_config { 'cinder_iscsi_shares_config': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_shares_config', value => $controller_train::params::cinder_iscsi_shares_config, }
+##   controller_train::configure_cinder::do_config { 'cinder_iscsi_nfs_mount_point_base': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_mount_point_base', value => $controller_train::params::cinder_iscsi_nfs_mount_point_base, }
    # The following is needed (at least in Ocata) otherwise there are problems attaching i-scsi volumes to VMs    
-   controller_train::configure_cinder::do_config { 'cinder_iscsi_nfs_nas_secure_file_permissions': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nas_secure_file_permissions', value => $controller_train::params::cinder_iscsi_nfs_nas_secure_file_permissions, }
+##   controller_train::configure_cinder::do_config { 'cinder_iscsi_nfs_nas_secure_file_permissions': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nas_secure_file_permissions', value => $controller_train::params::cinder_iscsi_nfs_nas_secure_file_permissions, }
 
 
 ############# Ceph configuration
