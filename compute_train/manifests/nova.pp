@@ -232,8 +232,8 @@ compute_train::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
    
 }
 
-# GPU specific setting and some setting for better performance for SSD disk for cld-dfa-gpu-02
- if ($::mgmtnw_ip == "192.168.60.108") {
+# GPU specific setting and some setting for better performance for SSD disk for cld-dfa-gpu-02 AND cld-np-gpu-02
+ if ($::mgmtnw_ip == "192.168.60.108") or ($::mgmtnw_ip == "192.168.60.133") {
   compute_train::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_train::params::pci_passthrough_whitelist, }
 
    compute_train::nova::do_config_list { "pci_alias":
@@ -253,7 +253,7 @@ compute_train::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
    
 }
 
-# GPU specific setting and some setting for better performance for SSD disk for cld-np-gpu-01
+# GPU specific setting and some setting for better performance for SSD disk for cld-np-gpu-01 
  if ($::mgmtnw_ip == "192.168.60.128") {
   compute_train::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_train::params::pci_passthrough_whitelist, }
 
