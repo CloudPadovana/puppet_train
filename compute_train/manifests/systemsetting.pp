@@ -72,7 +72,7 @@ include compute_train::params
 
 
    package { "ca_TERENA-SSL-CA-3":
-             source   => "http://artifacts.pd.infn.it/packages/CAP/misc/CentOS7/noarch/ca_TERENA-SSL-CA-3-1.0-1.el7.centos.noarch.rpm",
+             source   => "https://artifacts.pd.infn.it/packages/CAP/misc/CentOS8/noarch/ca_TERENA-SSL-CA-3-1.0-2.el8.noarch.rpm",
              provider => "rpm",
         }
 }
