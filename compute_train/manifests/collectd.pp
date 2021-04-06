@@ -17,6 +17,16 @@ class compute_train::collectd inherits compute_train::params {
          require => Package[$collectdpackages],
        }
 
+
+    cron {'collectd_flush_cache':
+             ensure      => present,
+             command     => "/usr/bin/killall -SIGUSR1 collectd",
+             user        => root,
+             minute      => '0',
+             hour        => '*/2'
+          }
+
+
    service { "collectd":
                              ensure      => running,
                              enable      => true,
