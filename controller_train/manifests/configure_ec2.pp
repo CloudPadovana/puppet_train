@@ -18,17 +18,17 @@ file { ['/var/lib/ec2-api',
   
 define do_config ($conf_file, $section, $param, $value) {
              exec { "${name}":
-                              command     => "/usr/bin/openstack-config --set ${conf_file} ${section} ${param} \"${value}\"",
-                              require     => Package['openstack-utils'],
-                              unless      => "/usr/bin/openstack-config --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
+                              command     => "/usr/bin/crudini --set ${conf_file} ${section} ${param} \"${value}\"",
+                              require     => Package['crudini'],
+                              unless      => "/usr/bin/crudini --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
                   }
        }
 
 define remove_config ($conf_file, $section, $param, $value) {
              exec { "${name}":
-                              command     => "/usr/bin/openstack-config --del ${conf_file} ${section} ${param}",
-                              require     => Package['openstack-utils'],
-                              onlyif      => "/usr/bin/openstack-config --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
+                              command     => "/usr/bin/crudini --del ${conf_file} ${section} ${param}",
+                              require     => Package['crudini'],
+                              onlyif      => "/usr/bin/crudini --get ${conf_file} ${section} ${param} 2>/dev/null | /bin/grep -- \"^${value}$\" 2>&1 >/dev/null",
                    }
        }
                                                                                                                                              

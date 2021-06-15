@@ -13,13 +13,16 @@ class controller_train::install_ca_cert inherits controller_train::params {
   $capackages = [   "ca-policy-egi-core",
                          "fetch-crl"
                      ]
-  package { $capackages: ensure => "installed" }
+  package { $capackages: 
+              ensure => "installed",
+              install_options => ['--enablerepo', 'epel'], 
+          }
 
-  package { "ca_TERENA-SSL-CA-3":
-    source   => "http://artifacts.pd.infn.it/packages/CAP/misc/CentOS7/current/ca_TERENA-SSL-CA-3.el7.centos.noarch.rpm",
-    provider => "rpm",
-    require  => Package[$capackages],
-  }
+#  package { "ca_TERENA-SSL-CA-3":
+#    source   => "http://artifacts.pd.infn.it/packages/CAP/misc/CentOS7/current/ca_TERENA-SSL-CA-3.el7.centos.noarch.rpm",
+#    provider => "rpm",
+#    require  => Package[$capackages],
+#  }
 
   file {'INFN-CA.pem':
     source  => 'puppet:///modules/controller_train/INFN-CA.pem',
