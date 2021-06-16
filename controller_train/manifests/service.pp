@@ -16,6 +16,14 @@ if $operatingsystemrelease =~ /^7.*/ {
                    hasstatus   => true,
                    hasrestart  => true,
            }
+    service { "target":
+                   ensure      => running,
+                   enable      => true,
+                   hasstatus   => true,
+                   hasrestart  => true,
+                   subscribe   => Class['controller_train::configure_cinder'],
+           }
+
 }
 
  ## FF added placement in Train ##       
@@ -160,13 +168,6 @@ if $operatingsystemrelease =~ /^7.*/ {
                    subscribe   => Class['controller_train::configure_cinder'],
            }
     service { "openstack-cinder-volume":
-                   ensure      => running,
-                   enable      => true,
-                   hasstatus   => true,
-                   hasrestart  => true,
-                   subscribe   => Class['controller_train::configure_cinder'],
-           }
-    service { "target":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
