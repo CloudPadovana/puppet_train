@@ -9,13 +9,14 @@ class controller_train::service inherits controller_train::params {
                    hasrestart  => true,
                    subscribe   => Class['controller_train::configure_horizon'],
            }
-
+if $operatingsystemrelease =~ /^7.*/ {
  service { "fetch-crl-cron":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
            }
+}
 
  ## FF added placement in Train ##       
  # Services for keystone, placement       

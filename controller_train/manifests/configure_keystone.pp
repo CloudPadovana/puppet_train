@@ -163,12 +163,13 @@ define do_config_list ($conf_file, $section, $param, $values) {
       mode     => '0640',
       source  => "puppet:///modules/controller_train/application.patch",
     }
-    
-    exec { "patch-controllers":
-      command => "/usr/bin/patch /usr/lib/python2.7/site-packages/keystone/server/flask/application.py /usr/share/keystone/application.patch",
-      unless  => "/bin/grep Keystone-patch-0002 /usr/lib/python2.7/site-packages/keystone/server/flask/application.py 2>/dev/null >/dev/null",
-      require => [ File["/usr/share/keystone/application.patch"], Package["patch"] ],
-    }
+
+# Disabilito almeno per il momento (su indicazione di Paolo A.)    
+#    exec { "patch-controllers":
+#      command => "/usr/bin/patch /usr/lib/python2.7/site-packages/keystone/server/flask/application.py /usr/share/keystone/application.patch",
+#      unless  => "/bin/grep Keystone-patch-0002 /usr/lib/python2.7/site-packages/keystone/server/flask/application.py 2>/dev/null >/dev/null",
+#      require => [ File["/usr/share/keystone/application.patch"], Package["patch"] ],
+#    }
 
   }
      
