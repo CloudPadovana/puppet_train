@@ -26,6 +26,18 @@ if $operatingsystemrelease =~ /^7.*/ {
 
 }
 
+if $operatingsystemrelease =~ /^8.*/ {
+
+ file { "/etc/cron.d/fetch-crl":
+    ensure   => file,
+    owner    => "root",
+    group    => "root",
+    mode     => "0600",
+    content  => file("controller_train/fetch-crl.cron"),
+  }
+}
+
+
  ## FF added placement in Train ##       
  # Services for keystone, placement       
     service { "httpd":
