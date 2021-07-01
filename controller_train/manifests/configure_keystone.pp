@@ -166,12 +166,13 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
 # Disabilito almeno per il momento (su indicazione di Paolo A.)    
 # LA riabilito, sempre su indicazione di Paolo A.
+if $operatingsystemrelease =~ /^8.*/ {
     exec { "patch-controllers":
       command => "/usr/bin/patch /usr/lib/python3.6/site-packages/keystone/server/flask/application.py /usr/share/keystone/application.patch",
       unless  => "/bin/grep Keystone-patch-0002 /usr/lib/python3.6/site-packages/keystone/server/flask/application.py 2>/dev/null >/dev/null",
       require => [ File["/usr/share/keystone/application.patch"], Package["patch"] ],
     }
-
+}
   }
      
 }
