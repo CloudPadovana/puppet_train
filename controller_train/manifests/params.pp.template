@@ -215,7 +215,7 @@ class controller_train::params ($cloud_role){
    $ec2_nova_metadata_ip = $vip_mgmt
    $enable_fip_topology_check = 'False'
    $enabled_apis = 'osapi_compute,metadata'
-   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,PciPassthroughFilter'
+   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,PciPassthroughFilter,NUMATopologyFilter'
    $eqlog_eqlx_group_name = 'CloudUnipdVeneto'
    $eqlog_eqlx_pool = 'default'
    $eqlog_san_ip = ''
